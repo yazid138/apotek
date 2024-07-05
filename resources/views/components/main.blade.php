@@ -34,7 +34,16 @@
         ],
         [
             'label' => 'Data Pengadaan',
-            'path' => '#',
+            'submenu' => [
+                [
+                    'label' => 'Rencana Pengadaan',
+                    'path' => '#',
+                ],
+                [
+                    'label' => 'Riwayat Pengadaan',
+                    'path' => '#',
+                ],
+            ],
         ],
     ];
 @endphp

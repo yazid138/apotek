@@ -4,10 +4,6 @@
             .header {
                 margin-top: 20px;
             }
-
-            input {
-                margin-right: 5px;
-            }
         </style>
     @endpush
 
@@ -16,7 +12,7 @@
             <div class="col-6">
                 <div class="form-group">
                     <label for="startDate" class="fw-semibold">Rentang Penjualan:</label>
-                    <div class="input-group d-flex justify-content-between mb-3">
+                    <div class="input-group d-flex justify-content-between mb-3 gap-1">
                         <input type="date" id="startDate" class="form-control">
                         <input type="date" id="endDate" class="form-control">
                         <button type="button" class="btn btn-primary btn-print p-2">Print</button>
