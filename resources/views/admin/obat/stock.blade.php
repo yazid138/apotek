@@ -1,4 +1,4 @@
-<x-main title="Stock Obat" role={{ $role }}>
+<x-main title="Stock Obat">
     @push('style')
         <style>
             .header {
@@ -34,18 +34,27 @@
                         <tr>
                             <th>Nama Obat</th>
                             <th>Harga</th>
-                            <th>Nomor Batch</th>
+                            <th>Safety Stock</th> {{-- kondisi pemilik & apoteker --}}
                             <th>Stock</th>
+                            <th>Nomor Batch</th>
                             <th>Kadaluwarsa</th>
+                            <th>Aksi</th> {{-- kondisi pemilik & apoteker --}}
                         </tr>
                     </thead>
                     <tbody class="text-center">
                         <tr>
                             <td>Amoxicillin 500mg</td>
                             <td>Rp 5.000</td>
-                            <td>1132234</td>
+                            <td>500</td> {{-- kondisi pemilik & apoteker --}}
                             <td>700</td>
+                            <td>1132234</td>
                             <td>11 Juni 2025</td>
+                            <td class="d-flex justify-content-center gap-1">
+                                <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                    data-bs-target="#orderModal">Pesan</button>
+                                <button type="button" class="btn btn-secondary">Dipesan</button> {{-- kondisi after pesan --}}
+                                <button type="button" class="btn btn-danger btn-delete">Hapus</button>
+                            </td> {{-- kondisi pemilik & apoteker --}}
                         </tr>
                     </tbody>
                 </table>

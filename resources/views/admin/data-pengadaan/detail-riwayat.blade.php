@@ -1,7 +1,7 @@
-<x-main title="Riwayat Transaksi" role={{ $role }}>
+<x-main title="Riwayat Transaksi">
     @push('style')
         <style>
-            .container {
+           .container {
                 margin: auto;
                 overflow: hidden;
             }

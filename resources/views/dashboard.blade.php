@@ -1,4 +1,4 @@
-<x-main title="Dashboard">
+<x-main title="Dashboard" role={{ $role }}>
     @push('style')
         <style>
             .container {
@@ -15,7 +15,6 @@
             .header h3 {
                 border-bottom: 1px solid #00796b;
             }
-            
         </style>
     @endpush
     <div class="header">

@@ -1,4 +1,4 @@
-<x-main title="Riwayat Pengadaan" role={{ $role }}>
+<x-main title="Rencana Pengadaan">
     @push('style')
         <style>
             .container {
@@ -16,17 +16,27 @@
         </div>
     <div class="card">
         <div class="card-body">
-            <table class="table table-striped table-bordered text-center">
+            <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th>Tanggal Pengadaan</th>
-                        <th>Aksi</th>
+                        <th>Tanggal</th>
+                        <th>Nama Obat</th>
+                        <th>Jumlah</th>
+                        <th>Satuan</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>01 Juni 2024</td>
-                        <td><a href="#" class="btn border-dark"><i class="fas fa-bars"></i></a></td>
+                        <td>Ibuprofen 400mg</td>
+                        <td>10</td>
+                        <td>Box</td>
+                    </tr>
+                    <tr>
+                        <td>10 Juni 2024</td>
+                        <td>Acetylcystein 200mg</td>
+                        <td>20</td>
+                        <td>Box</td>
                     </tr>
                 </tbody>
             </table>

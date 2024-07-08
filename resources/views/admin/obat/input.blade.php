@@ -1,4 +1,4 @@
-<x-main title="Input Obat" role={{ $role }}>
+<x-main title="Input Obat">
     @push('style')
         <style>
             .container {
@@ -12,6 +12,7 @@
                 padding-bottom: 5px;
                 text-align: center;
             }
+
         </style>
     @endpush
 
@@ -50,7 +51,9 @@
                             <label for="hargaObat" class="col-sm-3 col-form-label fw-semibold">Harga Obat :</label>
                             <div class="col-sm-9">
                                 <div class="input-group">
-                                    <span class="input-group-text">Rp</span>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">Rp</span>
+                                    </div>
                                     <input type="text" class="form-control" id="hargaObat" placeholder="0,00">
                                 </div>
                             </div>

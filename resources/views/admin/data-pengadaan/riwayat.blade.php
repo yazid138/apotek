@@ -1,4 +1,4 @@
-<x-main title="Riwayat Pengadaan" role={{ $role }}>
+<x-main title="Riwayat Pengadaan">
     @push('style')
         <style>
             .container {

@@ -1,51 +1,100 @@
 @extends('layouts.app2', ['title' => $title])
 
 @php
-    $menu = [
-        [
-            'label' => 'Dashboard',
-            'path' => route('home'),
-        ],
-        [
-            'label' => 'Data Penjualan',
-            'submenu' => [
-                [
-                    'label' => 'Input Tranksaksi',
-                    'path' => '#',
-                ],
-                [
-                    'label' => 'Riwayat Transaksi',
-                    'path' => '#',
+    $menu = [];
+    if ($role === 'admin') {
+        $menu = [
+            [
+                'label' => 'Dashboard',
+                'path' => 'admin.dashboard',
+            ],
+            [
+                'label' => 'Data Penjualan',
+                'submenu' => [
+                    [
+                        'label' => 'Input Tranksaksi',
+                        'path' => 'admin.input-transaksi',
+                    ],
+                    [
+                        'label' => 'Riwayat Transaksi',
+                        'path' => 'admin.riwayat-transaksi',
+                    ],
                 ],
             ],
-        ],
-        [
-            'label' => 'Obat',
-            'submenu' => [
-                [
-                    'label' => 'Stok Obat',
-                    'path' => '#',
-                ],
-                [
-                    'label' => 'Input Obat',
-                    'path' => '#',
-                ],
-            ],
-        ],
-        [
-            'label' => 'Data Pengadaan',
-            'submenu' => [
-                [
-                    'label' => 'Rencana Pengadaan',
-                    'path' => '#',
-                ],
-                [
-                    'label' => 'Riwayat Pengadaan',
-                    'path' => '#',
+            [
+                'label' => 'Obat',
+                'submenu' => [
+                    [
+                        'label' => 'Input Obat',
+                        'path' => 'admin.input-obat',
+                    ],
+                    [
+                        'label' => 'Stok Obat',
+                        'path' => 'admin.stock-obat',
+                    ],
                 ],
             ],
-        ],
-    ];
+            [
+                'label' => 'Data Pengadaan',
+                'submenu' => [
+                    [
+                        'label' => 'Rencana Pengadaan',
+                        'path' => 'admin.rencana-pengadaan',
+                    ],
+                    [
+                        'label' => 'Riwayat Pengadaan',
+                        'path' => 'admin.riwayat-pengadaan',
+                    ],
+                ],
+            ],
+        ];
+    } else {
+        $menu = [
+            [
+                'label' => 'Dashboard',
+                'path' => 'karyawan.dashboard',
+            ],
+            [
+                'label' => 'Data Penjualan',
+                'submenu' => [
+                    [
+                        'label' => 'Input Tranksaksi',
+                        'path' => 'karyawan.input-transaksi',
+                    ],
+                    [
+                        'label' => 'Riwayat Transaksi',
+                        'path' => 'karyawan.riwayat-transaksi',
+                    ],
+                ],
+            ],
+            [
+                'label' => 'Obat',
+                'submenu' => [
+                    [
+                        'label' => 'Input Obat',
+                        'path' => 'karyawan.input-obat',
+                    ],
+                    [
+                        'label' => 'Stok Obat',
+                        'path' => 'karyawan.stock-obat',
+                    ],
+                ],
+            ],
+            [
+                'label' => 'Data Pengadaan',
+                'submenu' => [
+                    [
+                        'label' => 'Rencana Pengadaan',
+                        'path' => 'karyawan.rencana-pengadaan',
+                    ],
+                    [
+                        'label' => 'Riwayat Pengadaan',
+                        'path' => 'karyawan.riwayat-pengadaan',
+                    ],
+                ],
+            ],
+        ];
+    }
 @endphp
 
 @prepend('style')
@@ -96,7 +145,13 @@
                     <img src="{{ asset('img/logo.png') }}" alt="" width="150">
                 </div>
                 <div class="col-10 d-flex justify-content-end align-items-center">
-                    <div><i class="fas fa-user"></i> Pemilik</div>
+                    <div><i class="fas fa-user"></i>
+                        @if ($role === 'admin')
+                            Pemilik
+                        @else
+                            Karyawan
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
@@ -105,15 +160,18 @@
                 <ul>
                     @foreach ($menu as $m)
                         @if (isset($m['submenu']))
-                            <li x-data="{ open: false }"><a href="#" @click="open = !open">{{ $m['label'] }}</a>
+                            <li x-data="{ open: {{ Request::routeIs(array_map(fn($sub) => $sub['path'], $m['submenu'])) ? 'true' : 'false' }} }">
+                                <a href="#" @click="open = !open">{{ $m['label'] }}</a>
                                 <ul x-show="open">
                                     @foreach ($m['submenu'] as $sub)
-                                        <li><a href="{{ $sub['path'] }}">{{ $sub['label'] }}</a></li>
+                                        <li><a class="{{ Request::routeIs($sub['path']) ? 'active' : '' }}"
+                                                href="{{ route($sub['path']) }}">{{ $sub['label'] }}</a></li>
                                     @endforeach
                                 </ul>
                             </li>
                         @else
-                            <li><a href="{{ $m['path'] }}">{{ $m['label'] }}</a></li>
+                            <li class="{{ Request::routeIs($m['path']) ? 'active' : '' }}"><a
+                                    href="{{ route($m['path']) }}">{{ $m['label'] }}</a></li>
                         @endif
                     @endforeach
                 </ul>
