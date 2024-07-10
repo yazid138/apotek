@@ -2,7 +2,44 @@
 
 @php
     $menu = [];
-    if ($role === 'admin') {
+    if (Auth::user()->role == 'karyawan') {
+        $menu = [
+            [
+                'label' => 'Dashboard',
+                'path' => 'karyawan.dashboard',
+            ],
+            [
+                'label' => 'Data Penjualan',
+                'submenu' => [
+                    [
+                        'label' => 'Input Tranksaksi',
+                        'path' => 'karyawan.input-transaksi',
+                    ],
+                    [
+                        'label' => 'Riwayat Transaksi',
+                        'path' => 'karyawan.riwayat-transaksi',
+                    ],
+                ],
+            ],
+            [
+                'label' => 'Obat',
+                'path' => 'karyawan.stock-obat',
+            ],
+            [
+                'label' => 'Data Pengadaan',
+                'submenu' => [
+                    [
+                        'label' => 'Rencana Pengadaan',
+                        'path' => 'karyawan.rencana-pengadaan',
+                    ],
+                    [
+                        'label' => 'Riwayat Pengadaan',
+                        'path' => 'karyawan.riwayat-pengadaan',
+                    ],
+                ],
+            ],
+        ];
+    } else {
         $menu = [
             [
                 'label' => 'Dashboard',
@@ -44,52 +81,6 @@
                     [
                         'label' => 'Riwayat Pengadaan',
                         'path' => 'admin.riwayat-pengadaan',
-                    ],
-                ],
-            ],
-        ];
-    } else {
-        $menu = [
-            [
-                'label' => 'Dashboard',
-                'path' => 'karyawan.dashboard',
-            ],
-            [
-                'label' => 'Data Penjualan',
-                'submenu' => [
-                    [
-                        'label' => 'Input Tranksaksi',
-                        'path' => 'karyawan.input-transaksi',
-                    ],
-                    [
-                        'label' => 'Riwayat Transaksi',
-                        'path' => 'karyawan.riwayat-transaksi',
-                    ],
-                ],
-            ],
-            [
-                'label' => 'Obat',
-                'submenu' => [
-                    [
-                        'label' => 'Input Obat',
-                        'path' => 'karyawan.input-obat',
-                    ],
-                    [
-                        'label' => 'Stok Obat',
-                        'path' => 'karyawan.stock-obat',
-                    ],
-                ],
-            ],
-            [
-                'label' => 'Data Pengadaan',
-                'submenu' => [
-                    [
-                        'label' => 'Rencana Pengadaan',
-                        'path' => 'karyawan.rencana-pengadaan',
-                    ],
-                    [
-                        'label' => 'Riwayat Pengadaan',
-                        'path' => 'karyawan.riwayat-pengadaan',
                     ],
                 ],
             ],
@@ -146,11 +137,7 @@
                 </div>
                 <div class="col-10 d-flex justify-content-end align-items-center">
                     <div><i class="fas fa-user"></i>
-                        @if ($role === 'admin')
-                            Pemilik
-                        @else
-                            Karyawan
-                        @endif
+                        {{ Auth::user()->name }}
                     </div>
                 </div>
             </div>

@@ -18,16 +18,9 @@ class LoginController extends Controller
     | redirecting them to your home screen. The controller uses a trait
     | to conveniently provide its functionality to your applications.
     |
-    */
+     */
 
     use AuthenticatesUsers;
-
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -44,15 +37,19 @@ class LoginController extends Controller
         $input = $request->all();
 
         $this->validate($request, [
-            'email' => 'required|email',
+            'username' => 'required',
             'password' => 'required',
 
         ]);
 
-        if (Auth::attempt(['email' => $input['email'], 'password' => $input['password']])) {
-            return to_route('home');
+        if (Auth::attempt(['username' => $input['username'], 'password' => $input['password']])) {
+            if (Auth::user()->role === 'karyawan') {
+                return to_route('karyawan.dashboard');
+            }
+
+            return to_route('admin.dashboard');
         } else {
-            return to_route('login')->with('error', 'Email dan Password salah');
+            return to_route('login')->with('error', 'username dan Password salah');
         }
     }
 }

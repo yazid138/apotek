@@ -47,10 +47,10 @@
             @csrf
 
             <div class="form-group">
-                <input class="form-control" id="email" type="email"
-                    class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"
-                    required autocomplete="email" autofocus placeholder="Email">
-                @error('email')
+                <input class="form-control" id="username" type="text"
+                    class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('email') }}"
+                    required autocomplete="username" autofocus placeholder="username">
+                @error('username')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>

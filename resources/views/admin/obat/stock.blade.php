@@ -20,44 +20,9 @@
     @endpush
 
     <div class="container">
-        <div class="header row justify-content-end">
-            <div class="col-6 my-2">
-                <div class="form-group">
-                    <input type="text" id="search" class="form-control" placeholder="search">
-                </div>
-            </div>
-        </div>
-        <div class="card">
+        <div class="card mt-4">
             <div class="card-body">
-                <table class="table table-striped table-bordered">
-                    <thead class="text-center">
-                        <tr>
-                            <th>Nama Obat</th>
-                            <th>Harga</th>
-                            <th>Safety Stock</th> {{-- kondisi pemilik & apoteker --}}
-                            <th>Stock</th>
-                            <th>Nomor Batch</th>
-                            <th>Kadaluwarsa</th>
-                            <th>Aksi</th> {{-- kondisi pemilik & apoteker --}}
-                        </tr>
-                    </thead>
-                    <tbody class="text-center">
-                        <tr>
-                            <td>Amoxicillin 500mg</td>
-                            <td>Rp 5.000</td>
-                            <td>500</td> {{-- kondisi pemilik & apoteker --}}
-                            <td>700</td>
-                            <td>1132234</td>
-                            <td>11 Juni 2025</td>
-                            <td class="d-flex justify-content-center gap-1">
-                                <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                    data-bs-target="#orderModal">Pesan</button>
-                                <button type="button" class="btn btn-secondary">Dipesan</button> {{-- kondisi after pesan --}}
-                                <button type="button" class="btn btn-danger btn-delete">Hapus</button>
-                            </td> {{-- kondisi pemilik & apoteker --}}
-                        </tr>
-                    </tbody>
-                </table>
+                {{ $dataTable->table() }}
             </div>
         </div>
     </div>
@@ -109,6 +74,33 @@
 
     @push('scripts')
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script>
+            const remove = (id) => {
+                Swal.fire({
+                    title: 'Apakah anda yakin?',
+                    text: "Ingin menghapus data",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Add your deletion logic here
+                        Swal.fire(
+                            'Berhasil!',
+                            'Data berhasil dihapus.',
+                            'success'
+                        );
+                    }
+                });
+            }
+        </script>
+    @endpush
+    @push('scripts')
+        {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+    @endpush
+    @push('scripts')
         <script>
             document.addEventListener('DOMContentLoaded', (event) => {
                 const increaseButton = document.getElementById('increaseQuantity');
