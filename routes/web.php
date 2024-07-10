@@ -36,6 +36,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/input-obat', 'create')->name('admin.input-obat');
             Route::post('/input-obat', 'store')->name('admin.input-obat.save');
             Route::get('/stock-obat', 'index')->name('admin.stock-obat');
+            Route::get('/obat/{id}/edit', 'edit')->name('admin.obat.edit');
+            Route::put('/obat/{id}', 'update')->name('admin.obat.update');
+            Route::delete('/obat-delete/{id}', 'destroy')->name('admin.obat.destroy');
+            
         });
     });
 
