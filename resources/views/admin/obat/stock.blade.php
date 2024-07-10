@@ -44,16 +44,19 @@
                                 'X-CSRF-TOKEN': token
                             },
                             success: function(response) {
-                                if (response.statusCode === 200) {
+                                if (response.success) {
                                     Swal.fire(
                                         'Berhasil!',
                                         'Data berhasil dihapus.',
                                         'success'
                                     );
+                                    if (LaravelDataTables["obat-table"]) {
+                                        LaravelDataTables["obat-table"].draw()
+                                    }
                                 } else {
                                     Swal.fire(
                                         'Gagal!',
-                                        'Terjadi Kesalahan',
+                                        'Data gagal dihapus.',
                                         'error'
                                     )
                                 }
