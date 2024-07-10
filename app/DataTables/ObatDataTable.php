@@ -20,8 +20,13 @@ class ObatDataTable extends DataTable
     {
         $delete = "";
         return (new EloquentDataTable($query))
-            ->addColumn('action', '<button type="button" class="btn btn-warning btn-edit">Edit</button>
-                                    <button type="button" class="btn btn-danger btn-delete" onclick="remove({{$id}})">Hapus</button>')
+            ->addColumn('action', function($row){
+                $editUrl = route('admin.obat.edit', $row->id);
+                return 
+                 '<a href="'.$editUrl.'" class="btn btn-warning btn-edit">Edit</a>
+            <button type="button" class="btn btn-danger btn-delete" onclick="remove('.$row->id.')">Hapus</button>';
+            }
+           )
             ->setRowId('id');
     }
 
