@@ -48,9 +48,9 @@ class ObatController extends Controller
                 'safety_stock' => 'required',
             ]);
             Obat::create($validated);
-            return to_route('admin.stock-obat')->with('success', 'Berhasil menambahkan Obat.');
+            return to_route('admin.stock-obat')->with('success', 'Berhasil menambahkan data obat.');
         } catch (\Exception $error) {
-            return redirect()->back()->with('failed', 'Gagal menambahkan Obat.');
+            return redirect()->back()->with('failed', 'Gagal menambahkan data obat.');
         }
     }
 
@@ -91,9 +91,9 @@ class ObatController extends Controller
             $obat = Obat::findOrFail($id);
             $obat->update($validated);
             $obat->save();
-            return to_route('admin.stock-obat')->with('success', 'Berhasil menambahkan Obat.');
+            return to_route('admin.stock-obat')->with('success', 'Berhasil mengubah data obat.');
         } catch (\Exception $error) {
-            return redirect()->back()->with('failed', 'Gagal mengupdate Obat.');
+            return redirect()->back()->with('failed', 'Gagal mengubah data obat.');
         }
     }
 

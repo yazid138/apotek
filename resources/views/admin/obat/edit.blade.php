@@ -77,7 +77,8 @@
                                 <div class="input-group has-validation">
                                     <span class="input-group-text">Rp</span>
                                     <input type="number" class="form-control @error('price') is-invalid @enderror"
-                                        id="hargaObat" placeholder="0,00" name="price"  value="{{ old('price', $obat->price) }}">
+                                        id="hargaObat" placeholder="0,00" name="price"
+                                        value="{{ old('price', $obat->price) }}">
                                     @error('price')
                                         <div class="invalid-feedback">
                                             <strong>{{ $message }}</strong>
@@ -90,7 +91,8 @@
                             <label for="jumlahObat" class="col-sm-3 col-form-label fw-semibold">Jumlah Obat :</label>
                             <div class="col-sm-9">
                                 <input type="number" class="form-control @error('stock') is-invalid @enderror"
-                                    id="jumlahObat" placeholder="0" name="stock"  value="{{ old('stock', $obat->stock) }}">
+                                    id="jumlahObat" placeholder="0" name="stock"
+                                    value="{{ old('stock', $obat->stock) }}">
                                 @error('stock')
                                     <span class="invalid-feedback">
                                         <strong>{{ $message }}</strong>
@@ -143,14 +145,11 @@
 
                         <div class="form-group d-flex justify-content-end mt-3">
                             {{-- <button type="button" class="btn btn-danger btn-ubah">Ubah</button> --}}
-                            <button type="submit" class="btn btn-primary btn-simpan">Simpan</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
                         </div>
                     </div>
+                </form>
             </div>
-
-
-            </form>
         </div>
-    </div>
     </div>
 </x-main>
