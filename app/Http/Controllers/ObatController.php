@@ -47,7 +47,7 @@ class ObatController extends Controller
 
         try {
             Obat::create($validated);
-            return to_route('admin.stock-obat')->with('success', 'Berhasil menambahkan data obat.');
+            return to_route('stock-obat')->with('success', 'Berhasil menambahkan data obat.');
         } catch (\Exception $error) {
             return redirect()->back()->withErrors(['failed' => 'Gagal menambahkan Obat.'])->withInput();
         }
@@ -90,7 +90,7 @@ class ObatController extends Controller
             $obat = Obat::findOrFail($id);
             $obat->update($validated);
             $obat->save();
-            return to_route('admin.stock-obat')->with('success', 'Berhasil mengubah data obat.');
+            return to_route('stock-obat')->with('success', 'Berhasil mengubah data obat.');
         } catch (\Exception $error) {
             return redirect()->back()->with(['failed' => 'Gagal mengupdate Obat.'])->withInput();
         }
