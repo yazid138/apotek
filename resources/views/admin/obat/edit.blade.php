@@ -145,14 +145,11 @@
 
                         <div class="form-group d-flex justify-content-end mt-3">
                             {{-- <button type="button" class="btn btn-danger btn-ubah">Ubah</button> --}}
-                            <button type="submit" class="btn btn-primary btn-simpan">Simpan</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
                         </div>
                     </div>
+                </form>
             </div>
-
-
-            </form>
         </div>
-    </div>
     </div>
 </x-main>

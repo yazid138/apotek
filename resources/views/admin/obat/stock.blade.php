@@ -5,10 +5,15 @@
                 margin-top: 20px;
             }
         </style>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
     @endpush
 
     <div class="container">
+
+        @if (Session::has('success'))
+            <div class="alert alert-success mt-4" role="alert">
+                {{ Session::get('success') }}
+            </div>
+        @endif
         <div class="card mt-4">
             <div class="card-body">
                 {{ $dataTable->table() }}
@@ -17,7 +22,6 @@
     </div>
 
     @push('scripts')
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
         <script>
             const remove = (id) => {
                 let tokenElement = document.head.querySelector('meta[name="csrf-token"]');
