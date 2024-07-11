@@ -43,13 +43,9 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt(['username' => $input['username'], 'password' => $input['password']])) {
-            if (Auth::user()->role === 'karyawan') {
-                return to_route('karyawan.dashboard');
-            }
-
-            return to_route('admin.dashboard');
+            return to_route('dashboard');
         } else {
-            return to_route('login')->with('error', 'username dan Password salah');
+            return to_route('login')->withErrors(['failed' => 'username dan Password salah']);
         }
     }
 }

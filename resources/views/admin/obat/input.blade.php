@@ -21,11 +21,11 @@
         </div>
         <div class="card">
             <div class="card-body p-4">
-                @if (Session::has('failed'))
+                @error('failed')
                     <div class="alert alert-danger" role="alert">
-                        {{ Session::get('failed') }}
+                        {{ $message }}
                     </div>
-                @endif
+                @enderror
                 <form id="form" method="POST" action="{{ route('admin.input-obat.save') }}">
                     @csrf
                     <div class="form-row">

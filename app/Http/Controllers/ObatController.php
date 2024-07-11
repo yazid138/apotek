@@ -15,12 +15,10 @@ class ObatController extends Controller
     public function index(ObatDataTable $dataTable)
     {
         if (Auth::user()->role === 'karyawan') {
-            return $dataTable->render('obat.stock');
-            // return view('obat.stock', compact('obat'));
+            return $dataTable->render('karyawan.obat.stock');
         }
 
         return $dataTable->render('admin.obat.stock');
-        // return view('admin.obat.stock', compact('obat'));
     }
 
     /**
@@ -36,21 +34,22 @@ class ObatController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'input_name' => 'required',
+            'input_date' => 'required',
+            'name' => 'required',
+            'price' => 'required',
+            'stock' => 'required',
+            'expired_date' => 'required',
+            'no_batch' => 'required',
+            'safety_stock' => 'required',
+        ]);
+
         try {
-            $validated = $request->validate([
-                'input_name' => 'required',
-                'input_date' => 'required',
-                'name' => 'required',
-                'price' => 'required',
-                'stock' => 'required',
-                'expired_date' => 'required',
-                'no_batch' => 'required',
-                'safety_stock' => 'required',
-            ]);
             Obat::create($validated);
             return to_route('admin.stock-obat')->with('success', 'Berhasil menambahkan Obat.');
         } catch (\Exception $error) {
-            return redirect()->back()->with('failed', 'Gagal menambahkan Obat.');
+            return redirect()->back()->withErrors(['failed' => 'Gagal menambahkan Obat.'])->withInput();
         }
     }
 
@@ -76,24 +75,24 @@ class ObatController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try {
-            $validated = $request->validate([
-                'input_name' => 'required',
-                'input_date' => 'required',
-                'name' => 'required',
-                'price' => 'required',
-                'stock' => 'required',
-                'expired_date' => 'required',
-                'no_batch' => 'required',
-                'safety_stock' => 'required',
-            ]);
+        $validated = $request->validate([
+            'input_name' => 'required',
+            'input_date' => 'required',
+            'name' => 'required',
+            'price' => 'required',
+            'stock' => 'required',
+            'expired_date' => 'required',
+            'no_batch' => 'required',
+            'safety_stock' => 'required',
+        ]);
 
+        try {
             $obat = Obat::findOrFail($id);
             $obat->update($validated);
             $obat->save();
             return to_route('admin.stock-obat')->with('success', 'Berhasil menambahkan Obat.');
         } catch (\Exception $error) {
-            return redirect()->back()->with('failed', 'Gagal mengupdate Obat.');
+            return redirect()->back()->with(['failed' => 'Gagal mengupdate Obat.'])->withInput();
         }
     }
 

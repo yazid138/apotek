@@ -21,11 +21,11 @@
         </div>
         <div class="card">
             <div class="card-body p-4">
-                @if (Session::has('failed'))
+                @error('failed')
                     <div class="alert alert-danger" role="alert">
-                        {{ Session::get('failed') }}
+                        {{ $message }}
                     </div>
-                @endif
+                @enderror
                 <form id="form" method="POST" action="{{ route('admin.obat.update', $obat->id) }}">
                     @csrf
                     @method('PUT')
@@ -77,7 +77,8 @@
                                 <div class="input-group has-validation">
                                     <span class="input-group-text">Rp</span>
                                     <input type="number" class="form-control @error('price') is-invalid @enderror"
-                                        id="hargaObat" placeholder="0,00" name="price"  value="{{ old('price', $obat->price) }}">
+                                        id="hargaObat" placeholder="0,00" name="price"
+                                        value="{{ old('price', $obat->price) }}">
                                     @error('price')
                                         <div class="invalid-feedback">
                                             <strong>{{ $message }}</strong>
@@ -90,7 +91,8 @@
                             <label for="jumlahObat" class="col-sm-3 col-form-label fw-semibold">Jumlah Obat :</label>
                             <div class="col-sm-9">
                                 <input type="number" class="form-control @error('stock') is-invalid @enderror"
-                                    id="jumlahObat" placeholder="0" name="stock"  value="{{ old('stock', $obat->stock) }}">
+                                    id="jumlahObat" placeholder="0" name="stock"
+                                    value="{{ old('stock', $obat->stock) }}">
                                 @error('stock')
                                     <span class="invalid-feedback">
                                         <strong>{{ $message }}</strong>

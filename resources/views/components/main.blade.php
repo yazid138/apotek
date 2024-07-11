@@ -6,24 +6,24 @@
         $menu = [
             [
                 'label' => 'Dashboard',
-                'path' => 'karyawan.dashboard',
+                'path' => 'dashboard',
             ],
             [
                 'label' => 'Data Penjualan',
                 'submenu' => [
                     [
                         'label' => 'Input Tranksaksi',
-                        'path' => 'karyawan.input-transaksi',
+                        'path' => 'input-transaksi',
                     ],
                     [
                         'label' => 'Riwayat Transaksi',
-                        'path' => 'karyawan.riwayat-transaksi',
+                        'path' => 'riwayat-transaksi',
                     ],
                 ],
             ],
             [
                 'label' => 'Obat',
-                'path' => 'karyawan.stock-obat',
+                'path' => 'stock-obat',
             ],
             [
                 'label' => 'Data Pengadaan',
@@ -43,18 +43,18 @@
         $menu = [
             [
                 'label' => 'Dashboard',
-                'path' => 'admin.dashboard',
+                'path' => 'dashboard',
             ],
             [
                 'label' => 'Data Penjualan',
                 'submenu' => [
                     [
                         'label' => 'Input Tranksaksi',
-                        'path' => 'admin.input-transaksi',
+                        'path' => 'input-transaksi',
                     ],
                     [
                         'label' => 'Riwayat Transaksi',
-                        'path' => 'admin.riwayat-transaksi',
+                        'path' => 'riwayat-transaksi',
                     ],
                 ],
             ],
@@ -67,7 +67,7 @@
                     ],
                     [
                         'label' => 'Stok Obat',
-                        'path' => 'admin.stock-obat',
+                        'path' => 'stock-obat',
                     ],
                 ],
             ],

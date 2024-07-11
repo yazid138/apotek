@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Obat;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Column;
@@ -20,13 +21,13 @@ class ObatDataTable extends DataTable
     {
         $delete = "";
         return (new EloquentDataTable($query))
-            ->addColumn('action', function($row){
+            ->addColumn('action', function ($row) {
                 $editUrl = route('admin.obat.edit', $row->id);
-                return 
-                 '<a href="'.$editUrl.'" class="btn btn-warning btn-edit">Edit</a>
-            <button type="button" class="btn btn-danger btn-delete" onclick="remove('.$row->id.')">Hapus</button>';
+                return
+                '<a href="' . $editUrl . '" class="btn btn-warning btn-edit">Edit</a>
+            <button type="button" class="btn btn-danger btn-delete" onclick="remove(' . $row->id . ')">Hapus</button>';
             }
-           )
+            )
             ->setRowId('id');
     }
 
@@ -58,6 +59,17 @@ class ObatDataTable extends DataTable
      */
     public function getColumns(): array
     {
+        $user = Auth::user();
+        if ($user->role === 'karyawan') {
+            return [
+                Column::make('name')->title('Nama Obat'),
+                Column::make('price')->title('Harga'),
+                Column::make('no_batch')->title('Nomor Batch'),
+                Column::make('stock')->title('Stock'),
+                Column::make('expired_date')->title('Kadaluarsa'),
+            ];
+        }
+
         return [
             Column::make('id'),
             Column::make('name')->title('Nama Obat'),

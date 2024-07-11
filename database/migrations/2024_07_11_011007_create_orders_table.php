@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Obat;
+use App\Models\Transaksi;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,10 +13,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transaksis', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('input_name');
-            $table->date('input_date');
+            $table->foreignIdFor(Transaksi::class)->constrained();
+            $table->foreignIdFor(Obat::class)->constrained();
+            $table->integer('qty');
             $table->timestamps();
         });
     }
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transaksis');
+        Schema::dropIfExists('orders');
     }
 };

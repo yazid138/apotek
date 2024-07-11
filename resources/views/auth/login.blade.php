@@ -38,11 +38,11 @@
 @section('content')
     <div class="login-container">
         <img src="{{ asset('img/logo.png') }}" alt="Logo">
-        @if (Session::has('error'))
+        @error('failed')
             <div class="alert alert-danger" role="alert">
-                {{ Session::get('error') }}
+                {{ $message }}
             </div>
-        @endif
+        @enderror
         <form class="mt-4" style="width: 300px" method="POST" action="{{ route('login') }}">
             @csrf
 
