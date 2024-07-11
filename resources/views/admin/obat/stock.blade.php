@@ -42,7 +42,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: 'obat-delete/' + id,
+                            url: '{{route('admin.obat.destroy', ['id' => '#'])}}'.replace('#', id),
                             method: 'DELETE',
                             headers: {
                                 'X-CSRF-TOKEN': token
