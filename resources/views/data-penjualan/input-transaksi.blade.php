@@ -62,7 +62,7 @@
                             <tbody id='table-body'>
                                 <tr data-id="1">
                                     <td>
-                                        <select class="nama-obat" name="obat[]" style="width: 100%">
+                                        <select class="form-select nama-obat" name="obat[]" style="width: 100%">
                                             <option selected disabled>Pilih Obat</option>
                                             @foreach ($obat as $o)
                                                 <option value="{{ $o->id }}">{{ $o->name }}</option>
@@ -71,8 +71,8 @@
                                     </td>
                                     <td class="no-batch"></td>
                                     <td class="price"></td>
-                                    <td style="width: 10%"><input class="qty" style="width: 100%" type="number"
-                                            name="qty[]" max="999" min="1">
+                                    <td style="width: 10%"><input class="qty form-control" style="width: 100%"
+                                            type="number" name="qty[]" max="999" min="1">
                                     </td>
                                     <td class="total-row"></td>
                                     <td><button type="button" class="btn btn-success" id="btn-add"><i
@@ -104,7 +104,7 @@
                 e.preventDefault()
                 $('#table-body').append(`<tr data-id="${++row}" id="row-${row}">
                                     <td>
-                                        <select class="nama-obat" name="obat[]" style="width: 100%">
+                                        <select class="form-select nama-obat" name="obat[]" style="width: 100%">
                                             <option selected disabled>Pilih Obat</option>
                                             @foreach ($obat as $o)
                                                 <option value="{{ $o->id }}">{{ $o->name }}</option>
@@ -113,7 +113,7 @@
                                     </td>
                                     <td class="no-batch"></td>
                                     <td class="price"></td>
-                                    <td style="width: 10%"><input class="qty" style="width: 100%" type="number" name="qty[]" max="999" min="1"></td>
+                                    <td style="width: 10%"><input class="qty form-control" style="width: 100%" type="number" name="qty[]" max="999" min="1"></td>
                                     <td class="total-row"></td>
                                     <td><button type="button" class="btn btn-danger btn-remove" onclick="remove(${row})"><i class="fas fa-minus"></i></button>
                                     </td>

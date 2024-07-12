@@ -53,7 +53,7 @@
                         <tr>
                             <td>{{ $data->transaksi->input_date }}</td>
                             <td>{{ $data->obat->name }}</td>
-                            <td>{{ $data->obat->price }}</td>
+                            <td>{{ Number::currency($data->obat->price, 'IDR', 'id') }}</td>
                         </tr>
                     @empty
                     @endforelse

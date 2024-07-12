@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/input-transaksi', 'create')->name('input-transaksi');
         Route::post('/create-transaksi', 'store')->name('create-transaksi');
         Route::get('/riwayat-transaksi', 'index')->name('riwayat-transaksi');
+        Route::get('/riwayat-transaksi/print', 'print')->name('riwayat-transaksi.print');
     });
 
     Route::get('/stock-obat', [ObatController::class, 'index'])->name('stock-obat');

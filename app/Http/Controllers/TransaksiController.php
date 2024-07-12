@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataTables\TransaksiDataTable;
 use App\Models\Obat;
+use App\Models\Order;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
 
@@ -90,5 +91,15 @@ class TransaksiController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function print(Request $request)
+    {
+        $request->validate([
+            'startDate' => 'required',
+            'endDate' => 'required',
+        ]);
+        $order = Order::with(['obat', 'transaksi'])->get();
+        return view('data-penjualan.print', compact('order'));
     }
 }
