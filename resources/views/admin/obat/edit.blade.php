@@ -90,14 +90,8 @@
                         <div class="form-group row mt-2">
                             <label for="jumlahObat" class="col-sm-3 col-form-label fw-semibold">Jumlah Obat :</label>
                             <div class="col-sm-9">
-                                <input type="number" class="form-control @error('stock') is-invalid @enderror"
-                                    id="jumlahObat" placeholder="0" name="stock"
-                                    value="{{ old('stock', $obat->stock) }}">
-                                @error('stock')
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input type="number" class="form-control" id="jumlahObat" placeholder="0"
+                                    value="{{ $obat->stock }}" disabled>
                             </div>
                         </div>
                         <div class="form-group row mt-2">

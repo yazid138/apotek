@@ -1,3 +1,9 @@
+@php
+    function format_date($date)
+    {
+        return date('d-m-Y', strtotime($date));
+    }
+@endphp
 <x-main title="Dashboard">
     @push('style')
         <style>
@@ -27,7 +33,8 @@
             <div class="card col-5 shadow-sm">
                 <div class="card-body">
                     <h6 class="card-title fw-bold">Total Pendapatan:</h6>
-                    <h4 class="card-text text-center fw-bold">{{ $totalKeuntungan->total }}</h4>
+                    <h4 class="card-text text-center fw-bold">
+                        {{ Number::currency($totalKeuntungan->total, 'IDR', 'id') }}</h4>
                 </div>
             </div>
             <div class="card col-5 shadow-sm">
@@ -51,7 +58,7 @@
                 <tbody class="text-center">
                     @forelse ($dataTransaksi as $data)
                         <tr>
-                            <td>{{ $data->transaksi->input_date }}</td>
+                            <td>{{ format_date($data->transaksi->input_date) }}</td>
                             <td>{{ $data->obat->name }}</td>
                             <td>{{ Number::currency($data->obat->price, 'IDR', 'id') }}</td>
                         </tr>

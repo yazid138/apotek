@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\DataTables\ObatDataTable;
 use App\Models\Obat;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class ObatController extends Controller
 {
@@ -14,11 +13,7 @@ class ObatController extends Controller
      */
     public function index(ObatDataTable $dataTable)
     {
-        if (Auth::user()->role === 'karyawan') {
-            return $dataTable->render('karyawan.obat.stock');
-        }
-
-        return $dataTable->render('admin.obat.stock');
+        return $dataTable->render('obat.stock');
     }
 
     /**
@@ -80,7 +75,6 @@ class ObatController extends Controller
             'input_date' => 'required',
             'name' => 'required',
             'price' => 'required',
-            'stock' => 'required',
             'expired_date' => 'required',
             'no_batch' => 'required',
             'safety_stock' => 'required',
@@ -92,7 +86,7 @@ class ObatController extends Controller
             $obat->save();
             return to_route('stock-obat')->with('success', 'Berhasil mengubah data obat.');
         } catch (\Exception $error) {
-            return redirect()->back()->with(['failed' => 'Gagal mengupdate Obat.'])->withInput();
+            return redirect()->back()->withErrors(['failed' => 'Gagal mengupdate Obat.'])->withInput();
         }
     }
 

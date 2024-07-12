@@ -24,10 +24,20 @@ class ObatDataTable extends DataTable
             ->addColumn('action', function ($row) {
                 $editUrl = route('admin.obat.edit', $row->id);
                 return
-                '<a href="' . $editUrl . '" class="btn btn-warning btn-edit">Edit</a>
+                '<button type="button" class="btn btn-success btn-delete" onclick="openModal(' . $row->id . ')">Pesan</button>
+                <a href="' . $editUrl . '" class="btn btn-warning btn-edit">Edit</a>
             <button type="button" class="btn btn-danger btn-delete" onclick="remove(' . $row->id . ')">Hapus</button>';
-            }
-            )
+            })
+            ->setRowClass(function ($obat) {
+                if ($obat->stock <= $obat->safety_stock) {
+                    return 'red';
+                } else if ($obat->stock <= $obat->safety_stock + 50) {
+                    return 'yellow';
+                } else {
+                    return 'green';
+                }
+            })
+            ->addIndexColumn()
             ->setRowId('id');
     }
 
@@ -71,7 +81,7 @@ class ObatDataTable extends DataTable
         }
 
         return [
-            Column::make('id'),
+            Column::make('DT_RowIndex')->title('No'),
             Column::make('name')->title('Nama Obat'),
             Column::make('price')->title('Harga')->render("$.fn.dataTable.render.number( '.', ',', 0, 'Rp ' )"),
             Column::make('safety_stock')->title('Safety Stock'),
