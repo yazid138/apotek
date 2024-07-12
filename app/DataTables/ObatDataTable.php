@@ -63,7 +63,7 @@ class ObatDataTable extends DataTable
         if ($user->role === 'karyawan') {
             return [
                 Column::make('name')->title('Nama Obat'),
-                Column::make('price')->title('Harga'),
+                Column::make('price')->title('Harga')->render("$.fn.dataTable.render.number( '.', ',', 0, 'Rp ' )"),
                 Column::make('no_batch')->title('Nomor Batch'),
                 Column::make('stock')->title('Stock'),
                 Column::make('expired_date')->title('Kadaluarsa'),
@@ -73,7 +73,7 @@ class ObatDataTable extends DataTable
         return [
             Column::make('id'),
             Column::make('name')->title('Nama Obat'),
-            Column::make('price')->title('Harga'),
+            Column::make('price')->title('Harga')->render("$.fn.dataTable.render.number( '.', ',', 0, 'Rp ' )"),
             Column::make('safety_stock')->title('Safety Stock'),
             Column::make('stock')->title('Stock'),
             Column::make('no_batch')->title('Nomor Batch'),

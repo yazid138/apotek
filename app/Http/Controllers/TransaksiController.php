@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\TransaksiDataTable;
 use App\Models\Obat;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
@@ -11,9 +12,9 @@ class TransaksiController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(TransaksiDataTable $dataTable)
     {
-        return view('data-penjualan.riwayat-transaksi');
+        return $dataTable->render('data-penjualan.riwayat-transaksi');
     }
 
     /**

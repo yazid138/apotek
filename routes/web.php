@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\ObatController;
 use App\Http\Controllers\TransaksiController;
+use App\Models\Order;
+use App\Models\Transaksi;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,7 +18,14 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        $totalKeuntungan = DB::table('orders')
+            ->join('obats', 'obats.id', '=', 'orders.obat_id')
+            ->selectRaw('SUM(orders.qty*obats.price) total')
+            ->first();
+        $jumlahTransaksi = Transaksi::count();
+        $transaksiTerakhir = Transaksi::latest()->first();
+        $dataTransaksi = Order::where('transaksi_id', $transaksiTerakhir->id)->with(['obat', 'transaksi'])->get();
+        return view('dashboard', compact('totalKeuntungan', 'dataTransaksi', 'jumlahTransaksi'));
     })->name('dashboard');
 
     Route::controller(TransaksiController::class)->group(function () {
@@ -25,6 +35,13 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::get('/stock-obat', [ObatController::class, 'index'])->name('stock-obat');
+
+    Route::get('/riwayat-pengadaan', function () {
+        return view('data-pengadaan.riwayat');
+    })->name('karyawan.riwayat-pengadaan');
+    Route::get('/riwayat-pengadaan/{id}', function () {
+        return view('data-pengadaan.detail-riwayat');
+    })->name('karyawan.riwayat-pengadaan.detail');
 
     Route::prefix('admin')->middleware('role:admin,pemilik')->group(function () {
         Route::get('/rencana-pengadaan', function () {
@@ -50,11 +67,5 @@ Route::middleware('auth')->group(function () {
         Route::get('/rencana-pengadaan', function () {
             return view('data-pengadaan.rencana');
         })->name('karyawan.rencana-pengadaan');
-        Route::get('/riwayat-pengadaan', function () {
-            return view('data-pengadaan.riwayat');
-        })->name('karyawan.riwayat-pengadaan');
-        Route::get('/riwayat-pengadaan/{id}', function () {
-            return view('data-pengadaan.detail-riwayat');
-        })->name('karyawan.riwayat-pengadaan.detail');
     });
 });

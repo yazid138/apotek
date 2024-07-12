@@ -1,4 +1,4 @@
-<x-main title="Dashboard" role={{ $role }}>
+<x-main title="Dashboard">
     @push('style')
         <style>
             .container {
@@ -19,7 +19,7 @@
     @endpush
     <div class="header">
         <h3 class="fw-bold pb-3 mb-3">Dashboard</h3>
-        <p><strong>Selamat Datang,</strong> Berikan yang terbaik untuk kesehatan pelanggan!</p>
+        <p><strong>Selamat Datang {{ Auth::user()->name }},</strong> Berikan yang terbaik untuk kesehatan pelanggan!</p>
     </div>
     <div class="container">
         <h5 class="fw-bold">Ringkasan : </h5>
@@ -27,19 +27,19 @@
             <div class="card col-5 shadow-sm">
                 <div class="card-body">
                     <h6 class="card-title fw-bold">Total Pendapatan:</h6>
-                    <h4 class="card-text text-center fw-bold">Rp 1.455.000</h4>
+                    <h4 class="card-text text-center fw-bold">{{ $totalKeuntungan->total }}</h4>
                 </div>
             </div>
             <div class="card col-5 shadow-sm">
                 <div class="card-body">
                     <h6 class="card-title fw-bold">Total Transaksi:</h6>
-                    <h4 class="card-text text-center fw-bold">102 Pembelian</h4>
+                    <h4 class="card-text text-center fw-bold">{{ $jumlahTransaksi }} Pembelian</h4>
                 </div>
             </div>
         </div>
 
         <div class="card col-12 mt-3 p-4 shadow-sm">
-            <h5 class="fw-bold text-center">PENJUALAN</h5>
+            <h5 class="fw-bold text-center">PENJUALAN TERAKHIR</h5>
             <table class="table table-hover table-bordered">
                 <thead class="text-center">
                     <tr>
@@ -49,11 +49,14 @@
                     </tr>
                 </thead>
                 <tbody class="text-center">
-                    <tr>
-                        <td>10 Juni 2024</td>
-                        <td>Amoxicillin 500 mg</td>
-                        <td>Rp 5.000</td>
-                    </tr>
+                    @forelse ($dataTransaksi as $data)
+                        <tr>
+                            <td>{{ $data->transaksi->input_date }}</td>
+                            <td>{{ $data->obat->name }}</td>
+                            <td>{{ $data->obat->price }}</td>
+                        </tr>
+                    @empty
+                    @endforelse
                 </tbody>
             </table>
         </div>
