@@ -25,16 +25,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Felicia Abigail</td>
-                            <td>01 Juni 2024</td>
-                            <td>Amoxicillin 500mg</td>
-                            <td>Rp 500</td>
-                            <td>100</td>
-                            <td>10-Oktober-2027</td>
-                            <td>1132234</td>
-                            <td>500</td>
-                        </tr>
+                        @forelse ($pengadaan as $p)
+                            <tr>
+                                <td>{{ $p->obat->input_name }}</td>
+                                <td>{{ $p->obat->input_date->format('d-m-Y') }}</td>
+                                <td>{{ $p->obat->name }}</td>
+                                <td>{{ Number::currency($p->obat->price, 'IDR', 'id') }}</td>
+                                <td>{{ $p->obat->stock }}</td>
+                                <td>{{ $p->obat->expired_date->format('d-m-Y') }}</td>
+                                <td>{{ $p->obat->no_batch }}</td>
+                                <td>{{ $p->obat->safety_stock }}</td>
+                            </tr>
+                        @empty
+                        @endforelse
                     </tbody>
                 </table>
             </div>

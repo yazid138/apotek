@@ -24,7 +24,7 @@ class ObatDataTable extends DataTable
             ->addColumn('action', function ($row) {
                 $editUrl = route('admin.obat.edit', $row->id);
                 return
-                '<button type="button" class="btn btn-success btn-delete" onclick="openModal(' . $row->id . ')">Pesan</button>
+                '<button type="button" class="btn btn-success" onclick="openModal(' . $row->id . ', \'' . $row->name . '\')">Pesan</button>
                 <a href="' . $editUrl . '" class="btn btn-warning btn-edit">Edit</a>
             <button type="button" class="btn btn-danger btn-delete" onclick="remove(' . $row->id . ')">Hapus</button>';
             })

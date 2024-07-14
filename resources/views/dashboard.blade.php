@@ -1,9 +1,3 @@
-@php
-    function format_date($date)
-    {
-        return date('d-m-Y', strtotime($date));
-    }
-@endphp
 <x-main title="Dashboard">
     @push('style')
         <style>
@@ -58,7 +52,7 @@
                 <tbody class="text-center">
                     @forelse ($dataTransaksi as $data)
                         <tr>
-                            <td>{{ format_date($data->transaksi->input_date) }}</td>
+                            <td>{{ $data->transaksi->input_date->format('d-m-Y') }}</td>
                             <td>{{ $data->obat->name }}</td>
                             <td>{{ Number::currency($data->obat->price, 'IDR', 'id') }}</td>
                         </tr>

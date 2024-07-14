@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
-use App\Models\Order;
+use App\Models\Obat;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Transaksi extends Model
+class Pengadaan extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'input_name',
+        'jumlah',
+        'satuan',
         'input_date',
     ];
 
@@ -19,8 +20,8 @@ class Transaksi extends Model
         'input_date' => 'datetime:d-m-Y',
     ];
 
-    public function orders()
+    public function obat()
     {
-        return $this->hasMany(Order::class);
+        return $this->belongsTo(Obat::class);
     }
 }

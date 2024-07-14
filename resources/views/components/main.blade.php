@@ -30,11 +30,11 @@
                 'submenu' => [
                     [
                         'label' => 'Rencana Pengadaan',
-                        'path' => 'karyawan.rencana-pengadaan',
+                        'path' => 'rencana-pengadaan',
                     ],
                     [
                         'label' => 'Riwayat Pengadaan',
-                        'path' => 'karyawan.riwayat-pengadaan',
+                        'path' => 'riwayat-pengadaan',
                     ],
                 ],
             ],
@@ -76,11 +76,11 @@
                 'submenu' => [
                     [
                         'label' => 'Rencana Pengadaan',
-                        'path' => 'admin.rencana-pengadaan',
+                        'path' => 'rencana-pengadaan',
                     ],
                     [
                         'label' => 'Riwayat Pengadaan',
-                        'path' => 'admin.riwayat-pengadaan',
+                        'path' => 'riwayat-pengadaan',
                     ],
                 ],
             ],
