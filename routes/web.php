@@ -16,6 +16,7 @@ Auth::routes();
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
+        if (Auth::user()->role === 'karyawan') return to_route('input-transaksi');
         $totalKeuntungan = DB::table('orders')
             ->join('obats', 'obats.id', '=', 'orders.obat_id')
             ->selectRaw('SUM(orders.qty*obats.price) total')

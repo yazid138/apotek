@@ -5,10 +5,6 @@
     if (Auth::user()->role == 'karyawan') {
         $menu = [
             [
-                'label' => 'Dashboard',
-                'path' => 'dashboard',
-            ],
-            [
                 'label' => 'Data Penjualan',
                 'submenu' => [
                     [
