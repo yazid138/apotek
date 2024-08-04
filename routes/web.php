@@ -3,9 +3,7 @@
 use App\Http\Controllers\ObatController;
 use App\Http\Controllers\PengadaanController;
 use App\Http\Controllers\TransaksiController;
-use App\Models\Order;
-use App\Models\Transaksi;
-use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,17 +13,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function () {
-        if (Auth::user()->role === 'karyawan') return to_route('input-transaksi');
-        $totalKeuntungan = DB::table('orders')
-            ->join('obats', 'obats.id', '=', 'orders.obat_id')
-            ->selectRaw('SUM(orders.qty*obats.price) total')
-            ->first();
-        $jumlahTransaksi = Transaksi::count();
-        $transaksiTerakhir = Transaksi::latest()->first();
-        $dataTransaksi = Order::where('transaksi_id', $transaksiTerakhir->id)->with(['obat', 'transaksi'])->get();
-        return view('dashboard', compact('totalKeuntungan', 'dataTransaksi', 'jumlahTransaksi'));
-    })->name('dashboard');
+    Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard');
 
     Route::controller(TransaksiController::class)->group(function () {
         Route::get('/input-transaksi', 'create')->name('input-transaksi');

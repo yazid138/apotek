@@ -16,7 +16,7 @@
         <div class="card">
             <div class="card-body">
                 <table class="table table-striped table-bordered">
-                    <thead>
+                    <thead class="text-center">
                         <tr>
                             <th>Tanggal</th>
                             <th>Nama Obat</th>
@@ -24,7 +24,7 @@
                             <th>Satuan</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="text-center">
                         @forelse ($pengadaan as $p)
                             <tr>
                                 <td>{{ $p->created_at->format('d-m-Y') }}</td>
@@ -33,6 +33,9 @@
                                 <td>{{ $p->satuan }}</td>
                             </tr>
                         @empty
+                            <tr>
+                                <td colspan="4">Tidak ada data</td>
+                            </tr>
                         @endforelse
                     </tbody>
                 </table>

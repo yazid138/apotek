@@ -28,7 +28,7 @@
                 <div class="card-body">
                     <h6 class="card-title fw-bold">Total Pendapatan:</h6>
                     <h4 class="card-text text-center fw-bold">
-                        {{ Number::currency($totalKeuntungan->total, 'IDR', 'id') }}</h4>
+                        {{ Number::currency($totalKeuntungan->total ?? 0, 'IDR', 'id') }}</h4>
                 </div>
             </div>
             <div class="card col-5 shadow-sm">
@@ -54,7 +54,7 @@
                         <tr>
                             <td>{{ $data->transaksi->input_date->format('d-m-Y') }}</td>
                             <td>{{ $data->obat->name }}</td>
-                            <td>{{ Number::currency($data->obat->price, 'IDR', 'id') }}</td>
+                            <td>{{ Number::currency($data->obat->price ?? 0, 'IDR', 'id') }}</td>
                         </tr>
                     @empty
                     @endforelse

@@ -1,9 +1,14 @@
 @extends('layouts.app2', ['title' => $title])
 
 @php
+    $user = Auth::user();
     $menu = [];
-    if (Auth::user()->role == 'karyawan') {
+    if ($user->role === 'karyawan' || $user->role === 'apoteker') {
         $menu = [
+            [
+                'label' => 'Dashboard',
+                'path' => 'dashboard',
+            ],
             [
                 'label' => 'Data Penjualan',
                 'submenu' => [

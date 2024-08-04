@@ -23,15 +23,21 @@ class ObatDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($row) {
                 $editUrl = route('admin.obat.edit', $row->id);
-                return
-                '<button type="button" class="btn btn-success" onclick="openModal(' . $row->id . ', \'' . $row->name . '\')">Pesan</button>
-                <a href="' . $editUrl . '" class="btn btn-warning btn-edit">Edit</a>
-            <button type="button" class="btn btn-danger btn-delete" onclick="remove(' . $row->id . ')">Hapus</button>';
+                $btn = '';
+                $btnPesan = '<button type="button" class="btn btn-success" onclick="openModal(' . $row->id . ', \'' . $row->name . '\')">Pesan</button>';
+                $btnEdit = '<a href="' . $editUrl . '" class="btn btn-warning btn-edit">Edit</a>';
+                $btnDelete = '<button type="button" class="btn btn-danger btn-delete" onclick="remove(' . $row->id . ')">Hapus</button>';
+                if (Auth::user()->role === 'pemilik') {
+                    $btn = $btnEdit.$btnDelete;
+                } else {
+                    $btn = $btnPesan.$btnEdit.$btnDelete;
+                }
+                return $btn;
             })
             ->setRowClass(function ($obat) {
-                if ($obat->stock <= $obat->safety_stock) {
+                if ($obat->stock - $obat->safety_stock <= 0) {
                     return 'red';
-                } else if ($obat->stock <= $obat->safety_stock + 50) {
+                } else if ($obat->stock - $obat->safety_stock <= 50) {
                     return 'yellow';
                 } else {
                     return 'green';
