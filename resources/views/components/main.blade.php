@@ -130,7 +130,7 @@
 @endprepend
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid overflow-auto">
         <div style="background: #A1C398; width: 100%;" class="row position-absolute top-0">
             <div class="row" style="padding: 15px 0">
                 <div class="col-2 text-center">
