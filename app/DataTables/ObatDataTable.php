@@ -22,7 +22,7 @@ class ObatDataTable extends DataTable
         $delete = "";
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($row) {
-                $editUrl = route('admin.obat.edit', $row->id);
+                $editUrl = route('obat.edit', $row->id);
                 $btnPesan = '<button type="button" class="btn btn-success" onclick="openModal(' . $row->id . ', \'' . $row->name . '\')">Pesan</button>';
                 $btnEdit = '<a href="' . $editUrl . '" class="btn btn-warning btn-edit">Edit</a>';
                 $btnDelete = '<button type="button" class="btn btn-danger btn-delete" onclick="remove(' . $row->id . ')">Hapus</button>';

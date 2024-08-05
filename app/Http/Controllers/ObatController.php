@@ -21,7 +21,7 @@ class ObatController extends Controller
      */
     public function create()
     {
-        return view('admin.obat.input');
+        return view('obat.input');
     }
 
     /**
@@ -62,7 +62,7 @@ class ObatController extends Controller
     public function edit($id)
     {
         $obat = Obat::findOrFail($id);
-        return view('admin.obat.edit', compact('obat'));
+        return view('obat.edit', compact('obat'));
     }
 
     /**

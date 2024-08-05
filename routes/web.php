@@ -32,15 +32,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/riwayat-pengadaan/detail', 'detail')->name('riwayat-pengadaan.detail');
     });
 
-    Route::prefix('admin')->middleware('role:admin,pemilik')->group(function () {
-        Route::controller(ObatController::class)->group(function () {
-            Route::get('/input-obat', 'create')->name('admin.input-obat');
-            Route::post('/input-obat', 'store')->name('admin.input-obat.save');
-            Route::get('/obat/{id}/edit', 'edit')->name('admin.obat.edit');
-            Route::put('/obat/{id}', 'update')->name('admin.obat.update');
-            Route::delete('/obat-delete/{id}', 'destroy')->name('admin.obat.destroy');
-        });
+    Route::controller(ObatController::class)->group(function () {
+        Route::get('/input-obat', 'create')->name('input-obat');
+        Route::post('/input-obat', 'store')->name('input-obat.save');
+        Route::get('/obat/{id}/edit', 'edit')->name('obat.edit');
+        Route::put('/obat/{id}', 'update')->name('obat.update');
+        Route::delete('/obat-delete/{id}', 'destroy')->name('obat.destroy');
+    });
 
+    Route::prefix('admin')->middleware('role:admin,pemilik')->group(function () {
         Route::controller(KaryawanController::class)->group(function () {
             Route::get('/karyawan', 'index')->name('admin.karyawan');
             Route::get('/karyawan/add', 'create')->name('admin.karyawan.create');

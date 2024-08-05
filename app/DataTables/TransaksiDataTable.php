@@ -63,7 +63,7 @@ class TransaksiDataTable extends DataTable
         return [
             Column::make('transaksi.input_date')->title('Tanggal'),
             Column::make('id')->title('Id Order'),
-            Column::make('transaksi.input_name')->title('Nama Pengunggah'),
+            Column::make('transaksi.input_name')->title('Id User'),
             Column::make('obat.name')->title('Nama Obat'),
             Column::make('obat.no_batch')->title('No. Batch'),
             Column::make('obat.price')->title('Harga')->render("$.fn.dataTable.render.number( '.', ',', 0, 'Rp ' )"),

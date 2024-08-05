@@ -26,7 +26,7 @@
                         {{ $message }}
                     </div>
                 @enderror
-                <form id="form" method="POST" action="{{ route('admin.input-obat.save') }}">
+                <form id="form" method="POST" action="{{ route('input-obat.save') }}">
                     @csrf
                     <div class="form-row">
                         <div class="form-group row">

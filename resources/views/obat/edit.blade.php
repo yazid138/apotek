@@ -26,7 +26,7 @@
                         {{ $message }}
                     </div>
                 @enderror
-                <form id="form" method="POST" action="{{ route('admin.obat.update', $obat->id) }}">
+                <form id="form" method="POST" action="{{ route('obat.update', $obat->id) }}">
                     @csrf
                     @method('PUT')
                     <div class="form-row">

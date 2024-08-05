@@ -2,105 +2,65 @@
 
 @php
     $user = Auth::user();
-    $menu = [];
-    if ($user->role === 'karyawan' || $user->role === 'apoteker') {
-        $menu = [
-            [
-                'label' => 'Dashboard',
-                'path' => 'dashboard',
-            ],
-            [
-                'label' => 'Data Penjualan',
-                'submenu' => [
-                    [
-                        'label' => 'Tambah Tranksaksi',
-                        'path' => 'input-transaksi',
-                    ],
-                    [
-                        'label' => 'Riwayat Transaksi',
-                        'path' => 'riwayat-transaksi',
-                    ],
+    $menu = [
+        [
+            'label' => 'Dashboard',
+            'path' => 'dashboard',
+        ],
+        [
+            'label' => 'Data Penjualan',
+            'submenu' => [
+                [
+                    'label' => 'Tambah Tranksaksi',
+                    'path' => 'input-transaksi',
+                ],
+                [
+                    'label' => 'Riwayat Transaksi',
+                    'path' => 'riwayat-transaksi',
                 ],
             ],
-            [
-                'label' => 'Obat',
-                'path' => 'stock-obat',
-            ],
-            [
-                'label' => 'Data Pengadaan',
-                'submenu' => [
-                    [
-                        'label' => 'Rencana Pengadaan',
-                        'path' => 'rencana-pengadaan',
-                    ],
-                    [
-                        'label' => 'Riwayat Pengadaan',
-                        'path' => 'riwayat-pengadaan',
-                    ],
+        ],
+        [
+            'label' => 'Obat',
+            'submenu' => [
+                [
+                    'label' => 'Tambah Obat',
+                    'path' => 'input-obat',
+                ],
+                [
+                    'label' => 'Stok Obat',
+                    'path' => 'stock-obat',
                 ],
             ],
-        ];
-    } else {
-        $menu = [
-            [
-                'label' => 'Dashboard',
-                'path' => 'dashboard',
-            ],
-            [
-                'label' => 'Data Penjualan',
-                'submenu' => [
-                    [
-                        'label' => 'Tambah Tranksaksi',
-                        'path' => 'input-transaksi',
-                    ],
-                    [
-                        'label' => 'Riwayat Transaksi',
-                        'path' => 'riwayat-transaksi',
-                    ],
+        ],
+        [
+            'label' => 'Data Pengadaan',
+            'submenu' => [
+                [
+                    'label' => 'Rencana Pengadaan',
+                    'path' => 'rencana-pengadaan',
+                ],
+                [
+                    'label' => 'Riwayat Pengadaan',
+                    'path' => 'riwayat-pengadaan',
                 ],
             ],
-            [
-                'label' => 'Obat',
-                'submenu' => [
-                    [
-                        'label' => 'Tambah Obat',
-                        'path' => 'admin.input-obat',
-                    ],
-                    [
-                        'label' => 'Stok Obat',
-                        'path' => 'stock-obat',
-                    ],
+        ],
+    ];
+    if ($user->role === 'admin' || $user->role === 'pemilik') {
+        $menu[] = [
+            'label' => 'Karyawan',
+            'submenu' => [
+                [
+                    'label' => 'Tambah Karyawan',
+                    'path' => 'admin.karyawan.create',
                 ],
-            ],
-            [
-                'label' => 'Data Pengadaan',
-                'submenu' => [
-                    [
-                        'label' => 'Rencana Pengadaan',
-                        'path' => 'rencana-pengadaan',
-                    ],
-                    [
-                        'label' => 'Riwayat Pengadaan',
-                        'path' => 'riwayat-pengadaan',
-                    ],
+                [
+                    'label' => 'Daftar Karyawan',
+                    'path' => 'admin.karyawan',
                 ],
             ],
         ];
-        if ($user->role === 'admin') {
-            $menu[] = [
-                'label' => 'Karyawan',
-                'submenu' => [
-                    [
-                        'label' => 'Tambah Karyawan',
-                        'path' => 'admin.karyawan.create',
-                    ],
-                    [
-                        'label' => 'Daftar Karyawan',
-                        'path' => 'admin.karyawan',
-                    ],
-                ],
-            ];
-        }
     }
 @endphp
 
