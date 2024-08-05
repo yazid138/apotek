@@ -1,4 +1,4 @@
-<x-main title="Input Transaksi" role={{ $role }}>
+<x-main title="Tambah Transaksi" role={{ $role }}>
     @push('style')
         <style>
             .container {
@@ -25,9 +25,9 @@
                     @csrf
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="namaPengunggah" class="fw-semibold">Nama Pengunggah</label>
+                            <label for="namaPengunggah" class="fw-semibold">ID User</label>
                             <input type="text" class="form-control @error('input_name') is-invalid @enderror"
-                                id="namaPengunggah" placeholder="Nama Pengunggah" name="input_name"
+                                id="namaPengunggah" placeholder="masukkan Id User" name="input_name"
                                 value="{{ old('input_name') }}">
                             @error('input_name')
                                 <span class="invalid-feedback">

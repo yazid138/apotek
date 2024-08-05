@@ -13,7 +13,7 @@
                 'label' => 'Data Penjualan',
                 'submenu' => [
                     [
-                        'label' => 'Input Tranksaksi',
+                        'label' => 'Tambah Tranksaksi',
                         'path' => 'input-transaksi',
                     ],
                     [
@@ -50,7 +50,7 @@
                 'label' => 'Data Penjualan',
                 'submenu' => [
                     [
-                        'label' => 'Input Tranksaksi',
+                        'label' => 'Tambah Tranksaksi',
                         'path' => 'input-transaksi',
                     ],
                     [
@@ -63,7 +63,7 @@
                 'label' => 'Obat',
                 'submenu' => [
                     [
-                        'label' => 'Input Obat',
+                        'label' => 'Tambah Obat',
                         'path' => 'admin.input-obat',
                     ],
                     [
@@ -86,6 +86,21 @@
                 ],
             ],
         ];
+        if ($user->role === 'admin') {
+            $menu[] = [
+                'label' => 'Karyawan',
+                'submenu' => [
+                    [
+                        'label' => 'Tambah Karyawan',
+                        'path' => 'admin.karyawan.create',
+                    ],
+                    [
+                        'label' => 'Daftar Karyawan',
+                        'path' => 'admin.karyawan',
+                    ],
+                ],
+            ];
+        }
     }
 @endphp
 
@@ -131,7 +146,7 @@
 
 @section('content')
     <div class="container-fluid overflow-auto">
-        <div style="background: #A1C398; width: 100%;" class="row position-absolute top-0">
+        <div style="background: #A1C398; width: 100%;z-index: 99" class="row position-absolute top-0">
             <div class="row" style="padding: 15px 0">
                 <div class="col-2 text-center">
                     <img src="{{ asset('img/logo.png') }}" alt="" width="150">

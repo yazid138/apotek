@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\ObatController;
 use App\Http\Controllers\PengadaanController;
 use App\Http\Controllers\TransaksiController;
-use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -13,7 +14,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::controller(TransaksiController::class)->group(function () {
         Route::get('/input-transaksi', 'create')->name('input-transaksi');
@@ -38,6 +39,15 @@ Route::middleware('auth')->group(function () {
             Route::get('/obat/{id}/edit', 'edit')->name('admin.obat.edit');
             Route::put('/obat/{id}', 'update')->name('admin.obat.update');
             Route::delete('/obat-delete/{id}', 'destroy')->name('admin.obat.destroy');
+        });
+
+        Route::controller(KaryawanController::class)->group(function () {
+            Route::get('/karyawan', 'index')->name('admin.karyawan');
+            Route::get('/karyawan/add', 'create')->name('admin.karyawan.create');
+            Route::get('/karyawan/{id}', 'show')->name('admin.karyawan.show');
+            Route::post('/karyawan', 'store')->name('admin.karyawan.insert');
+            Route::put('/karyawan/{id}', 'update')->name('admin.karyawan.update');
+            Route::delete('/karyawan/{id}', 'destroy')->name('admin.karyawan.delete');
         });
     });
 });

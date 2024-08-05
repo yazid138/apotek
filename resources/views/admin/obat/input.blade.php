@@ -1,4 +1,4 @@
-<x-main title="Input Obat">
+<x-main title="Tambah Obat">
     @push('style')
         <style>
             .container {
@@ -17,7 +17,7 @@
 
     <div class="container">
         <div class="header">
-            <h4 class="fw-bold">Input Obat</h4>
+            <h4 class="fw-bold">Tambah Obat</h4>
         </div>
         <div class="card">
             <div class="card-body p-4">
@@ -30,11 +30,11 @@
                     @csrf
                     <div class="form-row">
                         <div class="form-group row">
-                            <label for="namaPengunggah" class="col-sm-3 col-form-label fw-semibold">Nama Pengunggah
+                            <label for="namaPengunggah" class="col-sm-3 col-form-label fw-semibold">ID User
                                 :</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control @error('input_name') is-invalid @enderror"
-                                    id="namaPengunggah" placeholder="masukkan nama anda" name="input_name"
+                                    id="namaPengunggah" placeholder="masukkan Id User" name="input_name"
                                     value="{{ old('input_name') }}">
                                 @error('input_name')
                                     <span class="invalid-feedback">

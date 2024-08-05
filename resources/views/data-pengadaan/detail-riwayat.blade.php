@@ -14,7 +14,7 @@
                 <table class="table table-striped table-bordered text-center">
                     <thead>
                         <tr>
-                            <th>Nama Pengunggah</th>
+                            <th>Id User</th>
                             <th>Tanggal Input</th>
                             <th>Nama Obat</th>
                             <th>Harga Obat</th>
