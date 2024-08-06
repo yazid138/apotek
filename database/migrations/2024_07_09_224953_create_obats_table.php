@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('expired_date');
             $table->string('input_name');
             $table->string('input_date');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

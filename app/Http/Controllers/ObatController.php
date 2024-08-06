@@ -100,6 +100,7 @@ class ObatController extends Controller
             $obat->delete();
             return response()->json(['success' => 'Obat berhasil dihapus.']);
         } catch (\Exception $error) {
+            dd($error);
             return response()->json(['error' => 'Gagal menghapus obat.'], 500);
         }
     }

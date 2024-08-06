@@ -57,6 +57,9 @@
                             <td>{{ Number::currency($data->obat->price ?? 0, 'IDR', 'id') }}</td>
                         </tr>
                     @empty
+                        <tr>
+                            <td colspan="3">Tidak ada data</td>
+                        </tr>
                     @endforelse
                 </tbody>
             </table>
