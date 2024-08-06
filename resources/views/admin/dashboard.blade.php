@@ -51,11 +51,13 @@
                 </thead>
                 <tbody class="text-center">
                     @forelse ($dataTransaksi as $data)
-                        <tr>
-                            <td>{{ $data->transaksi->input_date->format('d-m-Y') }}</td>
-                            <td>{{ $data->obat->name }}</td>
-                            <td>{{ Number::currency($data->obat->price ?? 0, 'IDR', 'id') }}</td>
-                        </tr>
+                        @if ($data->obat)
+                            <tr>
+                                <td>{{ $data->transaksi->input_date->format('d-m-Y') }}</td>
+                                <td>{{ $data->obat->name }}</td>
+                                <td>{{ Number::currency($data->obat->price ?? 0, 'IDR', 'id') }}</td>
+                            </tr>
+                        @endif
                     @empty
                         <tr>
                             <td colspan="3">Tidak ada data</td>
