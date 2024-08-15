@@ -35,7 +35,7 @@
                             <div class="col-sm-9">
                                 <input type="text" class="form-control @error('input_name') is-invalid @enderror"
                                     id="namaPengunggah" placeholder="masukkan Id User" name="input_name"
-                                    value="{{ old('input_name') }}">
+                                    value="{{ old('input_name', Auth::user()->username) }}" readonly>
                                 @error('input_name')
                                     <span class="invalid-feedback">
                                         <strong>{{ $message }}</strong>
@@ -49,7 +49,7 @@
                             <div class="col-sm-9">
                                 <input value="{{ old('input_date', date('Y-m-d')) }}" type="date"
                                     class="form-control @error('input_date') is-invalid @enderror" id="tanggalInput"
-                                    placeholder="masukkan tanggal input" name="input_date">
+                                    placeholder="masukkan tanggal input" name="input_date" readonly>
                                 @error('input_date')
                                     <span class="invalid-feedback">
                                         <strong>{{ $message }}</strong>
@@ -98,12 +98,12 @@
                             </div>
                         </div>
                         <div class="form-group row mt-2">
-                            <label for="tanggalKadaluwarsa" class="col-sm-3 col-form-label fw-semibold">Tanggal
-                                Kadaluwarsa
+                            <label for="tanggalKedaluwarsa" class="col-sm-3 col-form-label fw-semibold">Tanggal
+                                Kedaluwarsa
                                 :</label>
                             <div class="col-sm-9">
                                 <input type="date" class="form-control @error('expired_date') is-invalid @enderror"
-                                    id="tanggalKadaluwarsa" placeholder="masukkan tanggal input" name="expired_date"
+                                    id="tanggalKedaluwarsa" placeholder="masukkan tanggal input" name="expired_date"
                                     value="{{ old('expired_date') }}">
                                 @error('expired_date')
                                     <span class="invalid-feedback">

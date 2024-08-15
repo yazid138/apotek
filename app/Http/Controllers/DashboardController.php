@@ -36,7 +36,13 @@ class DashboardController extends Controller
 
     public function karyawanDashboard()
     {
-        $obats = Obat::query()->limit(10)->get();
+        $obats = Obat::select(DB::raw('count(orders.obat_id) jumlah_transaksi, obats.*'))
+            ->join('orders', 'orders.obat_id', '=', 'obats.id')
+            ->where('stock', '>', 1)
+            ->groupBy('orders.obat_id')
+            ->orderBy('orders.created_at', 'DESC')
+            ->limit(10)
+            ->get();
         return view('karyawan.dashboard', compact('obats'));
     }
 

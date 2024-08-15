@@ -94,4 +94,21 @@ class PengadaanController extends Controller
     {
         //
     }
+
+    public function barangMasuk(Request $request)
+    {
+        $pengadaan = Obat::select('input_date')->groupBy('input_date')->get();
+        return view('data-pengadaan.barang-masuk', compact('pengadaan'));
+    }
+
+    public function detailBarangMasuk(Request $request)
+    {
+        if (!isset($request->date)) {
+            return to_route('barang-masuk');
+        }
+
+        $pengadaan = Obat::where('input_date', date('Y-m-d', strtotime($request->date)))->get();
+        return view('data-pengadaan.detail-barang-masuk', compact('pengadaan'));
+
+    }
 }

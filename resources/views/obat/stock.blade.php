@@ -4,25 +4,20 @@
             .header {
                 margin-top: 20px;
             }
+
+            tr.red td:not(:last-child) {
+                background-color: var(--bs-danger);
+            }
+
+            tr.green td:not(:last-child) {
+                background-color: var(--bs-success);
+            }
+
+            tr.yellow td:not(:last-child) {
+                background-color: var(--bs-warning);
+            }
         </style>
     @endpush
-    @if (Auth::user()->role !== 'karyawan')
-        @push('style')
-            <style>
-                tr.red td:not(:last-child) {
-                    background-color: var(--bs-danger);
-                }
-
-                tr.green td:not(:last-child) {
-                    background-color: var(--bs-success);
-                }
-
-                tr.yellow td:not(:last-child) {
-                    background-color: var(--bs-warning);
-                }
-            </style>
-        @endpush
-    @endif
 
     <div class="container">
 

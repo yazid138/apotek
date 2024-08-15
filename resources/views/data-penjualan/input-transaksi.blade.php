@@ -28,7 +28,7 @@
                             <label for="namaPengunggah" class="fw-semibold">ID User</label>
                             <input type="text" class="form-control @error('input_name') is-invalid @enderror"
                                 id="namaPengunggah" placeholder="masukkan Id User" name="input_name"
-                                value="{{ old('input_name') }}">
+                                value="{{ old('input_name', Auth::user()->username) }}" readonly>
                             @error('input_name')
                                 <span class="invalid-feedback">
                                     <strong>{{ $message }}</strong>
@@ -39,7 +39,7 @@
                             <label for="tanggal" class="fw-semibold">Tanggal</label>
                             <input value="{{ old('input_date', date('Y-m-d')) }}" type="date"
                                 class="form-control @error('input_date') is-invalid @enderror" id="tanggal"
-                                name="input_date">
+                                name="input_date" readonly>
                             @error('input_date')
                                 <span class="invalid-feedback">
                                     <strong>{{ $message }}</strong>

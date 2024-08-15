@@ -95,12 +95,12 @@
                             </div>
                         </div>
                         <div class="form-group row mt-2">
-                            <label for="tanggalKadaluwarsa" class="col-sm-3 col-form-label fw-semibold">Tanggal
-                                Kadaluwarsa
+                            <label for="tanggalKedaluwarsa" class="col-sm-3 col-form-label fw-semibold">Tanggal
+                                Kedaluwarsa
                                 :</label>
                             <div class="col-sm-9">
                                 <input type="date" class="form-control @error('expired_date') is-invalid @enderror"
-                                    id="tanggalKadaluwarsa" placeholder="masukkan tanggal input" name="expired_date"
+                                    id="tanggalKedaluwarsa" placeholder="masukkan tanggal input" name="expired_date"
                                     value="{{ old('expired_date', $obat->expired_date) }}">
                                 @error('expired_date')
                                     <span class="invalid-feedback">

@@ -10,10 +10,7 @@
     @endpush
 
     <div class="container">
-        <div class="mt-4 mb-2 d-flex justify-content-end">
-            <button type="button" class="btn btn-primary btn-print">Print</button>
-        </div>
-        <div class="card">
+        <div class="card mt-4">
             <div class="card-body">
                 <table class="table table-striped table-bordered">
                     <thead class="text-center">

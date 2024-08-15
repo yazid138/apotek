@@ -27,14 +27,14 @@
                     <tbody>
                         @forelse ($pengadaan as $p)
                             <tr>
-                                <td>{{ $p->obat->input_name }}</td>
-                                <td>{{ $p->obat->input_date->format('d-m-Y') }}</td>
-                                <td>{{ $p->obat->name }}</td>
-                                <td>{{ Number::currency($p->obat->price, 'IDR', 'id') }}</td>
-                                <td>{{ $p->obat->stock }}</td>
-                                <td>{{ $p->obat->expired_date->format('d-m-Y') }}</td>
-                                <td>{{ $p->obat->no_batch }}</td>
-                                <td>{{ $p->obat->safety_stock }}</td>
+                                <td>{{ $p->input_name }}</td>
+                                <td>{{ $p->input_date->format('d-m-Y') }}</td>
+                                <td>{{ $p->name }}</td>
+                                <td>{{ Number::currency($p->price, 'IDR', 'id') }}</td>
+                                <td>{{ $p->stock }}</td>
+                                <td>{{ $p->expired_date->format('d-m-Y') }}</td>
+                                <td>{{ $p->no_batch }}</td>
+                                <td>{{ $p->safety_stock }}</td>
                             </tr>
                         @empty
                         @endforelse

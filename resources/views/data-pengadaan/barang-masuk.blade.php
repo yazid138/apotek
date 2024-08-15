@@ -15,7 +15,7 @@
                 <table class="table table-striped table-bordered text-center">
                     <thead>
                         <tr>
-                            <th>Tanggal Pengadaan</th>
+                            <th>Tanggal Barang Masuk</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -23,7 +23,7 @@
                         @forelse ($pengadaan as $p)
                             <tr>
                                 <td>{{ $p->input_date->format('d-m-Y') }}</td>
-                                <td><a href="{{ route('riwayat-pengadaan.detail') }}?date={{ $p->input_date->format('d-m-Y') }}"
+                                <td><a href="{{ route('barang-masuk.detail') }}?date={{ $p->input_date->format('d-m-Y') }}"
                                         class="btn border-dark"><i class="fas fa-bars"></i></a></td>
                             </tr>
                         @empty

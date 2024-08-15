@@ -81,18 +81,17 @@ class ObatDataTable extends DataTable
                 Column::make('price')->title('Harga')->render("$.fn.dataTable.render.number( '.', ',', 0, 'Rp ' )"),
                 Column::make('no_batch')->title('Nomor Batch'),
                 Column::make('stock')->title('Stock'),
-                Column::make('expired_date')->title('Kadaluarsa'),
+                Column::make('expired_date')->title('Kedaluwarsa'),
             ];
         }
 
         return [
-            Column::make('DT_RowIndex')->title('No'),
             Column::make('name')->title('Nama Obat'),
             Column::make('price')->title('Harga')->render("$.fn.dataTable.render.number( '.', ',', 0, 'Rp ' )"),
             Column::make('safety_stock')->title('Safety Stock'),
             Column::make('stock')->title('Stock'),
             Column::make('no_batch')->title('Nomor Batch'),
-            Column::make('expired_date')->title('Kadaluarsa'),
+            Column::make('expired_date')->title('Kedaluwarsa'),
             Column::computed('action', 'Aksi')
                 ->addClass('text-center'),
         ];

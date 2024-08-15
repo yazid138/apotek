@@ -39,16 +39,18 @@
         </thead>
         <tbody>
             @forelse ($order as $o)
-                <tr>
-                    <td>{{ $o->transaksi->input_date }}</td>
-                    <td>{{ $o->transaksi->id }}</td>
-                    <td>{{ $o->transaksi->input_name }}</td>
-                    <td>{{ $o->obat->name }}</td>
-                    <td>{{ $o->obat->no_batch }}</td>
-                    <td>{{ Number::currency($o->obat->price, 'IDR', 'id') }}</td>
-                    <td>{{ $o->qty }}</td>
-                    <td>{{ Number::currency($o->qty * $o->obat->price, 'IDR', 'id') }}</td>
-                </tr>
+                @if ($o->obat)
+                    <tr>
+                        <td>{{ $o->transaksi->input_date->format('d-m-Y') }}</td>
+                        <td>{{ $o->transaksi->id }}</td>
+                        <td>{{ $o->transaksi->input_name }}</td>
+                        <td>{{ $o->obat->name }}</td>
+                        <td>{{ $o->obat->no_batch }}</td>
+                        <td>{{ Number::currency($o->obat->price, 'IDR', 'id') }}</td>
+                        <td>{{ $o->qty }}</td>
+                        <td>{{ Number::currency($o->qty * $o->obat->price, 'IDR', 'id') }}</td>
+                    </tr>
+                @endif
             @empty
             @endforelse
         </tbody>

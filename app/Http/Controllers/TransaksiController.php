@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\TransaksiDataTable;
 use App\Models\Obat;
 use App\Models\Order;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class TransaksiController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(TransaksiDataTable $dataTable)
+    public function index(Request $request)
     {
-        return $dataTable->render('data-penjualan.riwayat-transaksi');
+        return view('data-penjualan.riwayat-transaksi');
     }
 
     /**
@@ -61,6 +61,25 @@ class TransaksiController extends Controller
         }
     }
 
+    public function dataTable(Request $request)
+    {
+        $startDate = $request->startDate;
+        $endDate = $request->endDate;
+        $data = Order::query()
+            ->with(['obat', 'transaksi'])
+            ->whereHas('transaksi', function ($query) use ($startDate, $endDate) {
+                $query
+                    ->where('input_date', '>=', $startDate)
+                    ->where('input_date', '<=', $endDate);
+            })
+            ->get();
+        return DataTables::of($data)
+            ->addColumn('total', function ($row) {
+                return $row->obat ? $row->qty * $row->obat->price : 0;
+            })
+            ->make(true);
+    }
+
     /**
      * Display the specified resource.
      */
@@ -99,7 +118,12 @@ class TransaksiController extends Controller
             'startDate' => 'required',
             'endDate' => 'required',
         ]);
-        $order = Order::with(['obat', 'transaksi'])->get();
+        $order = Order::with(['obat', 'transaksi'])
+            ->whereHas('transaksi', function ($query) use ($request) {
+                $query
+                    ->where('input_date', '>=', $request->startDate)
+                    ->where('input_date', '<=', $request->endDate);
+            })->get();
         return view('data-penjualan.print', compact('order'));
     }
 }

@@ -21,6 +21,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/create-transaksi', 'store')->name('create-transaksi');
         Route::get('/riwayat-transaksi', 'index')->name('riwayat-transaksi');
         Route::get('/riwayat-transaksi/print', 'print')->name('riwayat-transaksi.print');
+        Route::get('/riwayat-transaksi/datatable', 'dataTable')->name('riwayat-transaksi.dataTable');
     });
 
     Route::get('/stock-obat', [ObatController::class, 'index'])->name('stock-obat');
@@ -30,6 +31,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/rencana-pengadaan', 'index')->name('rencana-pengadaan');
         Route::get('/riwayat-pengadaan', 'riwayat')->name('riwayat-pengadaan');
         Route::get('/riwayat-pengadaan/detail', 'detail')->name('riwayat-pengadaan.detail');
+        Route::get('/barang-masuk', 'barangMasuk')->name('barang-masuk');
+        Route::get('/barang-masuk/detail', 'detailBarangMasuk')->name('barang-masuk.detail');
     });
 
     Route::controller(ObatController::class)->group(function () {

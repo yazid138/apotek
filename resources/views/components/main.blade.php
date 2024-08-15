@@ -44,6 +44,10 @@
                     'label' => 'Riwayat Pengadaan',
                     'path' => 'riwayat-pengadaan',
                 ],
+                [
+                    'label' => 'Riwayat Barang Masuk',
+                    'path' => 'barang-masuk',
+                ],
             ],
         ],
     ];
