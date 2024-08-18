@@ -77,7 +77,7 @@
                         new Chart($('#barChart'), {
                             type: 'bar',
                             data: {
-                                labels: ['Minggu 1', 'Minggu 2', 'Minggu 3', 'Minggu 4', 'Minggu 5'],
+                                labels: ['Minggu 1', 'Minggu 2', 'Minggu 3', 'Minggu 4'],
                                 datasets: [{
                                     label: 'Total Pendapatan',
                                     data,
@@ -96,7 +96,7 @@
                         new Chart($('#donutChart'), {
                             type: 'doughnut',
                             data: {
-                                labels: ['Minggu 1', 'Minggu 2', 'Minggu 3', 'Minggu 4', 'Minggu 5'],
+                                labels: ['Minggu 1', 'Minggu 2', 'Minggu 3', 'Minggu 4'],
                                 datasets: [{
                                     label: 'Total Pendapatan',
                                     data,
@@ -116,7 +116,7 @@
                     const dataKeuntunganPerMinggu = {!! json_encode($keuntunganPerMinggu) !!}
                     const week = dataKeuntunganPerMinggu.map(e => e.week - 1)
                     let count = -1
-                    const dataChart = new Array(5).fill(0).map((e, index) => {
+                    const dataChart = new Array(4).fill(0).map((e, index) => {
                         if (week.includes(index)) {
                             count++
                             return dataKeuntunganPerMinggu[count].weekly_revenue
@@ -135,7 +135,7 @@
                                 const dataKeuntunganPerMinggu = res.keuntunganPerMinggu
                                 const week = dataKeuntunganPerMinggu.map(e => e.week - 1)
                                 let count = -1
-                                const dataChart = new Array(5).fill(0).map((e, index) => {
+                                const dataChart = new Array(4).fill(0).map((e, index) => {
                                     if (week.includes(index)) {
                                         count++
                                         return dataKeuntunganPerMinggu[count].weekly_revenue
