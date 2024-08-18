@@ -15,6 +15,7 @@ Auth::routes();
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/data-dashboard', [DashboardController::class, 'dataDashboard'])->name('dashboard.data');
 
     Route::controller(TransaksiController::class)->group(function () {
         Route::get('/input-transaksi', 'create')->name('input-transaksi');

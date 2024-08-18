@@ -22,49 +22,135 @@
         <p><strong>Selamat Datang {{ Auth::user()->name }},</strong> Berikan yang terbaik untuk kesehatan pelanggan!</p>
     </div>
     <div class="container">
-        <h5 class="fw-bold">Ringkasan : </h5>
-        <div class="mt-2 d-flex justify-content-between">
-            <div class="card col-5 shadow-sm">
-                <div class="card-body">
-                    <h6 class="card-title fw-bold">Total Pendapatan:</h6>
-                    <h4 class="card-text text-center fw-bold">
-                        {{ Number::currency($totalKeuntungan->total ?? 0, 'IDR', 'id') }}</h4>
+        <div class="row justify-content-between">
+            <div class="col">
+                <h5 class="fw-bold">Ringkasan : </h5>
+            </div>
+            <div class="col-3">
+                <div class="form-group">
+                    <label class="fw-semibold">Periode Penjualan:</label>
+                    <div class="input-group d-flex justify-content-between mb-3 gap-1">
+                        <input type="month" id="periode" class="form-control" value="{{ date('Y-m') }}">
+                    </div>
                 </div>
             </div>
-            <div class="card col-5 shadow-sm">
-                <div class="card-body">
-                    <h6 class="card-title fw-bold">Total Transaksi:</h6>
-                    <h4 class="card-text text-center fw-bold">{{ $jumlahTransaksi }} Pembelian</h4>
-                </div>
-            </div>
-        </div>
 
-        <div class="card col-12 mt-3 p-4 shadow-sm">
-            <h5 class="fw-bold text-center">PENJUALAN TERAKHIR</h5>
-            <table class="table table-hover table-bordered">
-                <thead class="text-center">
-                    <tr>
-                        <th scope="col">Tanggal</th>
-                        <th scope="col">Nama Obat</th>
-                        <th scope="col">Harga</th>
-                    </tr>
-                </thead>
-                <tbody class="text-center">
-                    @forelse ($dataTransaksi as $data)
-                        @if ($data->obat)
-                            <tr>
-                                <td>{{ $data->transaksi->input_date->format('d-m-Y') }}</td>
-                                <td>{{ $data->obat->name }}</td>
-                                <td>{{ Number::currency($data->obat->price ?? 0, 'IDR', 'id') }}</td>
-                            </tr>
-                        @endif
-                    @empty
-                        <tr>
-                            <td colspan="3">Tidak ada data</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+            <div class="mt-2 row">
+                <div class="card col-6 shadow-sm">
+                    <div class="card-body">
+                        <h6 class="card-title fw-bold">Total Pendapatan:</h6>
+                        <h4 class="card-text text-center fw-bold" id="totalPendapatan">
+                            {{ Number::currency($totalKeuntungan->total ?? 0, 'IDR', 'id') }}</h4>
+                    </div>
+                </div>
+                <div class="card col-6 shadow-sm">
+                    <div class="card-body">
+                        <h6 class="card-title fw-bold">Total Transaksi:</h6>
+                        <h4 class="card-text text-center fw-bold" id="jumlahPembelian">{{ $jumlahTransaksi->jumlah }}
+                            Pembelian</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card col-6 mt-3 p-4 shadow-sm">
+                    <canvas id="barChart"></canvas>
+                </div>
+                <div class="card col-6 mt-3 p-4 shadow-sm">
+                    <canvas id="donutChart" height="250"></canvas>
+                </div>
+            </div>
         </div>
-    </div>
+        @push('scripts')
+            <script>
+                $(document).ready(function() {
+                    const formatter = new Intl.NumberFormat('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR',
+                    });
+                    const generateChart = (data) => {
+                        let barChartStatus = Chart.getChart("barChart");
+                        let donutChartStatus = Chart.getChart("donutChart");
+                        if (barChartStatus != undefined || donutChartStatus != undefined) {
+                            barChartStatus.destroy();
+                            donutChartStatus.destroy();
+                        }
+                        new Chart($('#barChart'), {
+                            type: 'bar',
+                            data: {
+                                labels: ['Minggu 1', 'Minggu 2', 'Minggu 3', 'Minggu 4', 'Minggu 5'],
+                                datasets: [{
+                                    label: 'Total Pendapatan',
+                                    data,
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+                        new Chart($('#donutChart'), {
+                            type: 'doughnut',
+                            data: {
+                                labels: ['Minggu 1', 'Minggu 2', 'Minggu 3', 'Minggu 4', 'Minggu 5'],
+                                datasets: [{
+                                    label: 'Total Pendapatan',
+                                    data,
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: false,
+                                plugins: {
+                                    legend: {
+                                        position: 'right'
+                                    }
+                                }
+                            }
+                        });
+                    }
+                    const dataKeuntunganPerMinggu = {!! json_encode($keuntunganPerMinggu) !!}
+                    const week = dataKeuntunganPerMinggu.map(e => e.week - 1)
+                    let count = -1
+                    const dataChart = new Array(5).fill(0).map((e, index) => {
+                        if (week.includes(index)) {
+                            count++
+                            return dataKeuntunganPerMinggu[count].weekly_revenue
+                        }
+                        return 0
+                    })
+                    $('#periode').change(function() {
+                        $.ajax({
+                            url: "{{ route('dashboard.data') }}",
+                            data: {
+                                periode: $('#periode').val()
+                            },
+                            success: (res) => {
+                                $('#totalPendapatan').html(formatter.format(res.totalKeuntungan.total))
+                                $('#jumlahPembelian').html(res.jumlahTransaksi.jumlah + ' Pembelian')
+                                const dataKeuntunganPerMinggu = res.keuntunganPerMinggu
+                                const week = dataKeuntunganPerMinggu.map(e => e.week - 1)
+                                let count = -1
+                                const dataChart = new Array(5).fill(0).map((e, index) => {
+                                    if (week.includes(index)) {
+                                        count++
+                                        return dataKeuntunganPerMinggu[count].weekly_revenue
+                                    }
+                                    return 0
+                                })
+                                generateChart(dataChart)
+                            },
+                            error: () => {
+                                alert('Api error')
+                            }
+                        })
+                    })
+                    generateChart(dataChart)
+                })
+            </script>
+        @endpush
 </x-main>

@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Obat;
-use App\Models\Order;
-use App\Models\Transaksi;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -24,14 +23,80 @@ class DashboardController extends Controller
 
     public function adminDashboard()
     {
-        $totalKeuntungan = DB::table('orders')
-            ->join('obats', 'obats.id', '=', 'orders.obat_id')
-            ->selectRaw('SUM(orders.qty*obats.price) total')
+        $keuntunganPerMinggu = DB::table('transaksis')
+            ->selectRaw("strftime('%Y', transaksis.input_date) year")
+            ->selectRaw("strftime('%m', transaksis.input_date) month")
+            ->selectRaw("strftime('%Y-%W', transaksis.input_date) weekOfYear")
+            ->selectRaw("(strftime('%W', transaksis.input_date) - strftime('%W', date(transaksis.input_date, 'start of month')) + 1) week")
+            ->selectRaw("SUM(orders.qty * obats.price) weekly_revenue")
+            ->join('orders', 'transaksis.id', '=', 'orders.transaksi_id')
+            ->join('obats', function ($join) {
+                $join->on('orders.obat_id', '=', 'obats.id');
+                $join->on('obats.deleted_at', 'IS', DB::raw('NULL'));
+            })
+            ->where('year', date('Y'))
+            ->where('month', date('m'))
+            ->groupBy('weekOfYear')
+            ->orderBy('weekOfYear')
+            ->get();
+        $totalKeuntungan = DB::table('transaksis')
+            ->selectRaw("strftime('%Y', transaksis.input_date) year")
+            ->selectRaw("strftime('%m', transaksis.input_date) month")
+            ->selectRaw("SUM(orders.qty * obats.price) total")
+            ->join('orders', 'transaksis.id', '=', 'orders.transaksi_id')
+            ->join('obats', function ($join) {
+                $join->on('orders.obat_id', '=', 'obats.id');
+                $join->on('obats.deleted_at', 'IS', DB::raw('NULL'));
+            })
+            ->where('year', date('Y'))
+            ->where('month', date('m'))
             ->first();
-        $jumlahTransaksi = Transaksi::count();
-        $transaksiTerakhir = Transaksi::latest()->first();
-        $dataTransaksi = Order::where('transaksi_id', $transaksiTerakhir->id ?? 0)->with(['obat', 'transaksi'])->get();
-        return view('admin.dashboard', compact('totalKeuntungan', 'dataTransaksi', 'jumlahTransaksi'));
+        $jumlahTransaksi = DB::table('transaksis')
+            ->selectRaw("strftime('%Y', transaksis.input_date) year")
+            ->selectRaw("strftime('%m', transaksis.input_date) month")
+            ->selectRaw("COUNT(id) jumlah")
+            ->where('year', date('Y'))
+            ->where('month', date('m'))
+            ->first();
+        return view('admin.dashboard', compact('totalKeuntungan', 'jumlahTransaksi', 'keuntunganPerMinggu'));
+    }
+
+    public function dataDashboard(Request $request)
+    {
+        $keuntunganPerMinggu = DB::table('transaksis')
+            ->selectRaw("strftime('%Y-%m', transaksis.input_date) periode")
+            ->selectRaw("strftime('%Y-%W', transaksis.input_date) weekOfYear")
+            ->selectRaw("(strftime('%W', transaksis.input_date) - strftime('%W', date(transaksis.input_date, 'start of month')) + 1) week")
+            ->selectRaw("SUM(orders.qty * obats.price) weekly_revenue")
+            ->join('orders', 'transaksis.id', '=', 'orders.transaksi_id')
+            ->join('obats', function ($join) {
+                $join->on('orders.obat_id', '=', 'obats.id');
+                $join->on('obats.deleted_at', 'IS', DB::raw('NULL'));
+            })
+            ->where('periode', $request->has('periode') ? $request->periode :  date('Y-m'))
+            ->groupBy('weekOfYear')
+            ->orderBy('wweekOfYeareek')
+            ->get();
+        $totalKeuntungan = DB::table('transaksis')
+            ->selectRaw("strftime('%Y-%m', transaksis.input_date) periode")
+            ->selectRaw("SUM(orders.qty * obats.price) total")
+            ->join('orders', 'transaksis.id', '=', 'orders.transaksi_id')
+            ->join('obats', function ($join) {
+                $join->on('orders.obat_id', '=', 'obats.id');
+                $join->on('obats.deleted_at', 'IS', DB::raw('NULL'));
+            })
+            ->where('periode', $request->has('periode') ? $request->periode :  date('Y-m'))
+            ->first();
+        $jumlahTransaksi = DB::table('transaksis')
+            ->selectRaw("strftime('%Y-%m', transaksis.input_date) periode")
+            ->selectRaw("COUNT(id) jumlah")
+            ->where('periode', $request->has('periode') ? $request->periode :  date('Y-m'))
+            ->first();
+        return response()->json([
+            'keuntunganPerMinggu' => $keuntunganPerMinggu,
+            'totalKeuntungan' => $totalKeuntungan,
+            'jumlahTransaksi' => $jumlahTransaksi,
+        ]);
     }
 
     public function karyawanDashboard()
