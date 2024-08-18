@@ -32,10 +32,7 @@
                         <th>Tanggal</th>
                         <th>Id Transaksi</th>
                         <th>Id User</th>
-                        <th>Nama Obat</th>
-                        <th>No. Batch</th>
-                        <th>Harga</th>
-                        <th>qty</th>
+                        <th>Obat</th>
                         <th>Total</th>
                     </tr>
                 </thead>
@@ -46,6 +43,11 @@
     @push('scripts')
         <script>
             $(document).ready(function() {
+                const formatter = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0
+                    });
                 const table = $('#data-table').DataTable({
                     processing: true,
                     serverSide: true,
@@ -58,26 +60,29 @@
                     },
                     buttons: [],
                     columns: [{
-                            data: 'transaksi.input_date',
+                            data: 'input_date',
                         },
                         {
-                            data: 'transaksi.id',
+                            data: 'id',
                         },
                         {
-                            data: 'transaksi.input_name',
+                            data: 'input_name',
                         },
                         {
-                            data: 'obat.name'
-                        },
-                        {
-                            data: 'obat.no_batch'
-                        },
-                        {
-                            data: 'obat.price',
-                            render: $.fn.dataTable.render.number('.', ',', 0, 'Rp ')
-                        },
-                        {
-                            data: 'qty'
+                            data: 'orders',
+                            render: (data, type, row) => {
+                                let html = '<ol>'
+                                data.forEach(e => {
+                                    if (e.obat) {
+                                        html += `<li>
+                                            ${e.obat.name}<br>
+                                            ${formatter.format(e.obat.price)} x ${e.qty}
+                                            </li>`
+                                    }
+                                });
+                                html += '</ol>'
+                                return html
+                            }
                         },
                         {
                             data: 'total',

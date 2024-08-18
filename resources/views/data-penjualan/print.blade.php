@@ -28,29 +28,40 @@
         <thead>
             <tr>
                 <th>Tanggal</th>
-                <th>Id Order</th>
-                <th>Nama Pengunggah</th>
-                <th>Nama Obat</th>
-                <th>No. Batch</th>
-                <th>Harga</th>
-                <th>qty</th>
+                <th>Id Transaksi</th>
+                <th>Id User</th>
+                <th>Obat</th>
                 <th>Total</th>
             </tr>
         </thead>
         <tbody>
-            @forelse ($order as $o)
-                @if ($o->obat)
+            @forelse ($transaksi as $t)
+                @php
+                    $total = 0
+                @endphp
                     <tr>
-                        <td>{{ $o->transaksi->input_date->format('d-m-Y') }}</td>
-                        <td>{{ $o->transaksi->id }}</td>
-                        <td>{{ $o->transaksi->input_name }}</td>
-                        <td>{{ $o->obat->name }}</td>
-                        <td>{{ $o->obat->no_batch }}</td>
-                        <td>{{ Number::currency($o->obat->price, 'IDR', 'id') }}</td>
-                        <td>{{ $o->qty }}</td>
-                        <td>{{ Number::currency($o->qty * $o->obat->price, 'IDR', 'id') }}</td>
+                        <td>{{ $t->input_date->format('d-m-Y') }}</td>
+                        <td>{{ $t->id }}</td>
+                        <td>{{ $t->input_name }}</td>
+                        <td>
+                            <ol>
+                                @forelse ($t->orders as $o)
+                                    @if ($o->obat)
+                                        @php
+                                            $total += $o->obat->price * $o->qty
+                                        @endphp
+                                        <li>
+                                            {{$o->obat->name}}<br>
+                                            {{Number::currency($o->obat->price, 'IDR', 'id')}} x {{$o->qty}}
+                                        </li>
+                                    @endif
+                                @empty
+                                    -
+                                @endforelse
+                            </ol>
+                        </td>
+                        <td>{{ Number::currency($total, 'IDR', 'id') }}</td>
                     </tr>
-                @endif
             @empty
             @endforelse
         </tbody>

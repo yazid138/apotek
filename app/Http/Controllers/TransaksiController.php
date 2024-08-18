@@ -65,17 +65,22 @@ class TransaksiController extends Controller
     {
         $startDate = $request->startDate;
         $endDate = $request->endDate;
-        $data = Order::query()
-            ->with(['obat', 'transaksi'])
-            ->whereHas('transaksi', function ($query) use ($startDate, $endDate) {
-                $query
-                    ->where('input_date', '>=', $startDate)
-                    ->where('input_date', '<=', $endDate);
-            })
+        $startDate = $request->has('startDate') ? $request->startDate : date('Y-m-d');
+        $endDate = $request->has('endDate') ? $request->endDate : date('Y-m-d');
+        $data = Transaksi::query()
+            ->with(['orders', 'orders.obat'])
+            ->where('input_date', '>=', $startDate)
+            ->where('input_date', '<=', $endDate)
             ->get();
         return DataTables::of($data)
             ->addColumn('total', function ($row) {
-                return $row->obat ? $row->qty * $row->obat->price : 0;
+                $total = 0;
+                foreach ($row->orders as $value) {
+                    if ($value->obat) {
+                        $total += $value->qty * $value->obat->price;
+                    }
+                }
+                return $total;
             })
             ->make(true);
     }
@@ -118,12 +123,11 @@ class TransaksiController extends Controller
             'startDate' => 'required',
             'endDate' => 'required',
         ]);
-        $order = Order::with(['obat', 'transaksi'])
-            ->whereHas('transaksi', function ($query) use ($request) {
-                $query
-                    ->where('input_date', '>=', $request->startDate)
-                    ->where('input_date', '<=', $request->endDate);
-            })->get();
-        return view('data-penjualan.print', compact('order'));
+        $transaksi = Transaksi::query()
+            ->with(['orders', 'orders.obat'])
+            ->where('input_date', '>=', $request->startDate)
+            ->where('input_date', '<=', $request->endDate)
+            ->get();
+        return view('data-penjualan.print', compact('transaksi'));
     }
 }
