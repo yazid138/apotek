@@ -48,6 +48,9 @@ class TransaksiController extends Controller
             for ($i = 0; $i < count($request->qty); $i++) {
                 $obat = Obat::find((int) $request->obat[$i]);
                 $obat->stock -= (int) $request->qty[$i];
+                if ($obat->stock < 0) {
+                    return redirect()->back()->withErrors(['failed' => 'Stock obat tidak mencukupi.'])->withInput();
+                }
                 $obat->save();
                 $orders[] = [
                     'obat_id' => (int) $request->obat[$i],
@@ -63,14 +66,13 @@ class TransaksiController extends Controller
 
     public function dataTable(Request $request)
     {
-        $startDate = $request->startDate;
-        $endDate = $request->endDate;
         $startDate = $request->has('startDate') ? $request->startDate : date('Y-m-d');
         $endDate = $request->has('endDate') ? $request->endDate : date('Y-m-d');
         $data = Transaksi::query()
+            ->selectRaw('transaksis.*')
+            ->selectRaw("strftime('%Y-%m', input_date) periode")
             ->with(['orders', 'orders.obat'])
-            ->where('input_date', '>=', $startDate)
-            ->where('input_date', '<=', $endDate)
+            ->where('periode', $request->has('periode') ? $request->periode :  date('Y-m'))
             ->get();
         return DataTables::of($data)
             ->addColumn('total', function ($row) {
@@ -124,9 +126,10 @@ class TransaksiController extends Controller
             'endDate' => 'required',
         ]);
         $transaksi = Transaksi::query()
+            ->selectRaw('transaksis.*')
+            ->selectRaw("strftime('%Y-%m', input_date) periode")
             ->with(['orders', 'orders.obat'])
-            ->where('input_date', '>=', $request->startDate)
-            ->where('input_date', '<=', $request->endDate)
+            ->where('periode', $request->has('periode') ? $request->periode :  date('Y-m'))
             ->get();
         return view('data-penjualan.print', compact('transaksi'));
     }
