@@ -21,6 +21,11 @@
         </div>
         <div class="card">
             <div class="card-body p-4">
+                @error('failed')
+                <div class="alert alert-danger" role="alert">
+                    {{ $message }}
+                </div>
+                @enderror
                 <form method="POST" action="{{ route('create-transaksi') }}">
                     @csrf
                     <div class="form-row">

@@ -15,6 +15,7 @@
                         <label class="fw-semibold">Periode Penjualan:</label>
                         <div class="input-group d-flex justify-content-between mb-3 gap-1">
                             <input type="month" id="periode" class="form-control" value="{{ date('Y-m') }}">
+                            <button type="submit" class="btn btn-primary btn-print p-2">Print</button>
                         </div>
                     </div>
                 </form>

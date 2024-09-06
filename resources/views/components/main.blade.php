@@ -51,6 +51,21 @@
             ],
         ],
     ];
+    if ($user->role !== 'apoteker') {
+        $menu[3] = [
+            'label' => 'Data Pengadaan',
+            'submenu' => [
+                [
+                    'label' => 'Riwayat Pengadaan',
+                    'path' => 'riwayat-pengadaan',
+                ],
+                [
+                    'label' => 'Riwayat Barang Masuk',
+                    'path' => 'barang-masuk',
+                ],
+            ],
+        ];
+    }
     if ($user->role === 'admin' || $user->role === 'pemilik') {
         $menu[] = [
             'label' => 'Karyawan',

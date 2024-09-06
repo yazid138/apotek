@@ -40,10 +40,6 @@ class TransaksiController extends Controller
         ]);
 
         try {
-            $transaksi = Transaksi::create([
-                'input_name' => $request->input_name,
-                'input_date' => $request->input_date,
-            ]);
             $orders = [];
             for ($i = 0; $i < count($request->qty); $i++) {
                 $obat = Obat::find((int) $request->obat[$i]);
@@ -57,6 +53,10 @@ class TransaksiController extends Controller
                     'qty' => (int) $request->qty[$i],
                 ];
             }
+            $transaksi = Transaksi::create([
+                'input_name' => $request->input_name,
+                'input_date' => $request->input_date,
+            ]);
             $transaksi->orders()->createMany($orders);
             return to_route('riwayat-transaksi')->with('success', 'Gagal menambahkan transaksi.');
         } catch (\Exception $error) {
@@ -66,8 +66,6 @@ class TransaksiController extends Controller
 
     public function dataTable(Request $request)
     {
-        $startDate = $request->has('startDate') ? $request->startDate : date('Y-m-d');
-        $endDate = $request->has('endDate') ? $request->endDate : date('Y-m-d');
         $data = Transaksi::query()
             ->selectRaw('transaksis.*')
             ->selectRaw("strftime('%Y-%m', input_date) periode")
@@ -121,10 +119,6 @@ class TransaksiController extends Controller
 
     public function print(Request $request)
     {
-        $request->validate([
-            'startDate' => 'required',
-            'endDate' => 'required',
-        ]);
         $transaksi = Transaksi::query()
             ->selectRaw('transaksis.*')
             ->selectRaw("strftime('%Y-%m', input_date) periode")
